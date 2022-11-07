@@ -8,15 +8,21 @@ import androidx.room.DatabaseConfiguration;
 import androidx.room.InvalidationTracker;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import com.example.addressbook.Entity.Address;
 import com.example.addressbook.Entity.Email;
+import com.example.addressbook.Entity.Image;
 import com.example.addressbook.Entity.PhoneNumber;
 import com.example.addressbook.Entity.SignUp;
 import com.example.addressbook.Entity.UserName;
 
-@Database(entities = {SignUp.class, UserName.class, Address.class, Email.class, PhoneNumber.class},version = 8,exportSchema = false)
+/**
+ * singleton class to access database
+ */
+@Database(entities = {SignUp.class, UserName.class, Address.class, Email.class, PhoneNumber.class, Image.class},version = 12,exportSchema = false)
 public abstract class DataBaseHelper extends RoomDatabase {
     private static String DB_NAME = "AddressBook";
     private static DataBaseHelper instance;
@@ -28,4 +34,5 @@ public abstract class DataBaseHelper extends RoomDatabase {
         return instance;
     }
    public abstract AddressBookDao dao();
+    public abstract  UserInfoDao userInfoDao();
 }

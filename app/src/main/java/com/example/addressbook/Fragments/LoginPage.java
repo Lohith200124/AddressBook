@@ -2,7 +2,6 @@ package com.example.addressbook.Fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,18 +15,22 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.addressbook.Activity.AddressBookStructure;
-import com.example.addressbook.Activity.ToolBar;
+
+import com.example.addressbook.Activity.ForgotPassword;
+import com.example.addressbook.Activity.HomePageActivity;
 import com.example.addressbook.Entity.SignUp;
 import com.example.addressbook.R;
 import com.example.addressbook.db.DataBaseHelper;
 
 import java.util.List;
 
+/**
+ * login page having login button and forgot password this is a fragment
+ */
 
 public class LoginPage extends Fragment {
 
-    TextView userName,password;
+    TextView userName,password,ForgotPassword;
     Button signin,reset;
 
     public LoginPage() {
@@ -43,44 +46,50 @@ public class LoginPage extends Fragment {
        password = view.findViewById(R.id.password);
        signin = view.findViewById(R.id.signIn);
        reset = view.findViewById(R.id.reset);
+        ForgotPassword = view.findViewById(R.id.forgotPassword);
         DataBaseHelper dataBaseHelper = DataBaseHelper.getDb(getContext());
+        SharedPreferences sharedPreferences;
+        sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("flag", true);
+        Intent intent;
+        intent = new Intent(getActivity(), HomePageActivity.class);
        signin.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               String UserName,Password;
+               String UserName, Password;
                UserName = userName.getText().toString();
                Password = password.getText().toString();
                List<SignUp> list = dataBaseHelper.dao().getAllUSers();
-               for(int i=0;i<list.size();i++){
-                   if(UserName.equals(list.get(i).getUserName())){
-                       if(Password.equals(list.get(i).getPassword())){
-                           SharedPreferences sharedPreferences ;
-                           sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
-                           SharedPreferences.Editor editor = sharedPreferences.edit();
-                           editor.putBoolean("flag",true);
-                           Intent intent;
-                           intent = new Intent(getActivity(), ToolBar.class);
+               for (int i = 0; i < list.size(); i++) {
+                   if (UserName.equals(list.get(i).getUserName())) {
+                       if (Password.equals(list.get(i).getPassword())) {
                            startActivity(intent);
                            break;
-                       }
-                       else
-                       {
+                       } else {
                            Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
                        }
-                       }
-                   else
-                   {
+                   } else {
                        Toast.makeText(getContext(), "invalid", Toast.LENGTH_SHORT).show();
                        userName.setText("");
                        password.setText("");
                    }
 
-                   }
-
                }
 
+           }
+       }
 
-       });
+
+    );
+        ForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), com.example.addressbook.Activity.ForgotPassword.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
 
     }

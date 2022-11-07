@@ -1,5 +1,6 @@
 package com.example.addressbook.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,19 +10,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.addressbook.Activity.ActivtyLoginFragments;
+import com.example.addressbook.Activity.CheckFor;
+import com.example.addressbook.Activity.ForgotPassword;
 import com.example.addressbook.Entity.SignUp;
 import com.example.addressbook.R;
 import com.example.addressbook.db.DataBaseHelper;
 
 import java.util.List;
 
-
+/**
+ * signup page fragment
+ */
 public class SignupPage extends Fragment {
 
-    TextView userName, password, reEnterPassword, hero;
+    TextView firstName,lastName,userName, password, reEnterPassword, hero,ForgotPassword;
     Button create, reset;
+    CheckFor checkFor =new CheckFor();
 
     public SignupPage() {
         // Required empty public constructor
@@ -38,6 +45,9 @@ public class SignupPage extends Fragment {
         create = view.findViewById(R.id.Create);
         hero = view.findViewById(R.id.HeroName);
         reset = view.findViewById(R.id.Reset);
+
+        firstName = view.findViewById(R.id.FirstName);
+        lastName = view.findViewById(R.id.LastName);
         DataBaseHelper databaseHelper = DataBaseHelper.getDb(getContext());
 
         create.setOnClickListener(new View.OnClickListener() {
@@ -49,20 +59,36 @@ public class SignupPage extends Fragment {
                 ReEnterPassword = reEnterPassword.getText().toString();
                 HeroName = hero.getText().toString();
                 List<SignUp> list = databaseHelper.dao().getAllUSers();
-                if(list.size()>0) {
-                    for (int i = 0; i < list.size(); i++) {
+                if (checkFor.validateEmail(UserName)) {
+                    if (list.size() > 0) {
+                        for (int i = 0; i < list.size(); i++) {
 
-                        if (UserName.equals(list.get(i).getUserName())) {
-                            userName.setText("");
-                            break;
+                            if (UserName.equals(list.get(i).getUserName())) {
+                                userName.setText("");
+                                break;
+                            }
+                        }
+                    }
+
+                    if (Password.equals(ReEnterPassword)) {
+                        boolean check;
+                        check = passwordValid(Password);
+                        if (check) {
+                            databaseHelper.dao().insert(new SignUp(UserName, Password, HeroName,
+                                    firstName.getText().toString(), lastName.getText().toString()));
+                        } else {
+                            Toast.makeText(getActivity(), "follow convention", Toast.LENGTH_SHORT).show();
+                            password.setText("");
+                            reEnterPassword.setText("");
                         }
                     }
                 }
-                if (Password.equals(ReEnterPassword)) {
-                    databaseHelper.dao().insert(new SignUp(UserName, Password, HeroName));
+                else{
+                    Toast.makeText(getActivity(), "error in email/userName format", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
 
 
         reset.setOnClickListener(new View.OnClickListener() {
@@ -76,5 +102,32 @@ public class SignupPage extends Fragment {
         });
 
         return view;
+    }
+    public boolean passwordValid(String str){
+        int upper = 0, lower = 0, number = 0, special = 0;
+      if(str.length() >= 8)
+        {
+        for(int i = 0; i < str.length(); i++)
+        {
+            char ch = str.charAt(i);
+            if (ch >= 'A' && ch <= 'Z')
+                upper++;
+            else if (ch >= 'a' && ch <= 'z')
+                lower++;
+            else if (ch >= '0' && ch <= '9')
+                number++;
+            else
+                special++;
+        }
+        if(upper>=1&lower>=1&number>=1&special>=1){
+            return true;
+        }
+        else{
+            return false;
+        }
+        }
+      else{
+          return  false;
+      }
     }
 }

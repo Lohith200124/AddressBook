@@ -20,7 +20,7 @@
             android:orientation="vertical"
             >
             <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="10dp">
                 <ImageView
@@ -28,24 +28,24 @@
                     android:layout_height="68dp"
                     android:src="@drawable/ic_baseline_email_24"></ImageView>
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
                     android:orientation="vertical">
                     <EditText
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:hint="Email address"
                         android:id="@+id/emailAddress"
-                        android:textSize="40dp"
+                        android:textSize="30dp"
                         android:textStyle="bold"></EditText>
                 </LinearLayout>
 
 
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="10dp">
                 <ImageView
@@ -53,18 +53,19 @@
                     android:layout_height="68dp"
                     android:src="@drawable/ic_baseline_password_24"></ImageView>
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
                     android:orientation="vertical">
                     <EditText
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:hint="P a s s w o r d"
+                        android:hint="Password"
                         android:id="@+id/password"
-                        android:textSize="40dp"
-                        android:textStyle="bold"></EditText>
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        android:inputType="textPassword"></EditText>
                 </LinearLayout>
 
 

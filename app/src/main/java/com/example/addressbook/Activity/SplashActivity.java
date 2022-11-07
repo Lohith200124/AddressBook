@@ -1,16 +1,17 @@
 package com.example.addressbook.Activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 
-import com.example.addressbook.MainActivity;
 import com.example.addressbook.R;
+
+/**
+ * it shows a splash screen and takes us into the homepageactivity
+ */
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -22,10 +23,10 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
-                Boolean check = sharedPreferences.getBoolean("flag", false);
+                Boolean check = sharedPreferences.getBoolean("flag",false);
                 Intent intent;
                 if (check) {
-                    intent = new Intent(SplashActivity.this, ToolBar.class);
+                    intent = new Intent(SplashActivity.this, HomePageActivity.class);
                 }
                 else{
                     intent = new Intent(SplashActivity.this, ActivtyLoginFragments.class);

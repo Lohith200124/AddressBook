@@ -8,6 +8,9 @@ import com.example.addressbook.Entity.UserName;
 
 import java.util.List;
 
+/**
+ * one to many relation for usernameAddress
+ */
 public class UserNameAddress {
     @Embedded
     UserName userName;

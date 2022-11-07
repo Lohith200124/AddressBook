@@ -11,9 +11,18 @@ import com.example.addressbook.Adapter.FragmentLoginPageAdapter;
 import com.example.addressbook.R;
 import com.google.android.material.tabs.TabLayout;
 
+/**
+ * login fragment activity
+ *
+ */
 public class ActivtyLoginFragments extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
+
+    /**
+     * created fragment manger and tab layout
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

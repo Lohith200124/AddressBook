@@ -1,6 +1,5 @@
 package com.example.addressbook.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.addressbook.Activity.AddressBookStructure;
 import com.example.addressbook.R;
 
 
@@ -31,8 +29,8 @@ public class CreateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-            Intent intent = new Intent(getActivity(),AddressBookStructure.class);
-            startActivity(intent);
-        return inflater.inflate(R.layout.fragment_create, container, false);
+            /*Intent intent = new Intent(getActivity(),AddressBookStructureActivity.class);
+            startActivity(intent);*/
+        return inflater.inflate(R.layout.activity_address_book_structure, container, false);
     }
 }

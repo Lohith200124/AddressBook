@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.ToolBar"
+    tools:context=".Activity.HomePageActivity"
     android:orientation="vertical">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -12,19 +12,12 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:titleTextColor="@color/white"
             android:id="@+id/ToolBar"></androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <com.google.android.material.tabs.TabLayout
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:id="@+id/tabLayoutMain"></com.google.android.material.tabs.TabLayout>
-        <androidx.viewpager.widget.ViewPager
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/viewPagerMain"></androidx.viewpager.widget.ViewPager>
-</LinearLayout>
+            android:layout_height="match_parent"
+            android:id="@+id/MainFrame"></FrameLayout>
 </LinearLayout>

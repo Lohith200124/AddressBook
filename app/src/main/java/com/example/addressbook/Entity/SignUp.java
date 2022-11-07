@@ -9,25 +9,31 @@ import androidx.room.PrimaryKey;
 public class SignUp {
     @PrimaryKey
     @NonNull
-    String userName;
+  public  String userName1;
     @ColumnInfo(name = "password")
     String password;
     @ColumnInfo(name = "hero")
     String hero;
+    @ColumnInfo
+    String firstName;
+    @ColumnInfo
+    String lastName;
 
-    public SignUp(@NonNull String userName, String password, String hero) {
-        this.userName = userName;
+    public SignUp(@NonNull String userName1, String password, String hero, String firstName,String lastName) {
+        this.userName1 = userName1;
         this.password = password;
         this.hero = hero;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     @NonNull
     public String getUserName() {
-        return userName;
+        return userName1;
     }
 
     public void setUserName(@NonNull String userName) {
-        this.userName = userName;
+        this.userName1 = userName;
     }
 
     public String getPassword() {
@@ -44,5 +50,21 @@ public class SignUp {
 
     public void setHero(String hero) {
         this.hero = hero;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

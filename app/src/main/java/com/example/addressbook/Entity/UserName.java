@@ -7,8 +7,10 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(indices = @Index(value = "firstName",unique = true))
-public class UserName {
+import java.io.Serializable;
+
+@Entity
+public class UserName implements Serializable {
 @PrimaryKey(autoGenerate = true)
 int id;
 @ColumnInfo
@@ -23,11 +25,19 @@ int id;
         this.lastName = lastName;
     }
     @Ignore
-    public UserName(String firstName, String lastName) {
+    public UserName(@NonNull String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+    @Ignore
+    public UserName(@NonNull String firstName) {
+        this.firstName = firstName;
+    }
 
+
+
+@Ignore
+public  UserName(){}
     public String getFirstName() {
         return firstName;
     }
@@ -51,4 +61,5 @@ int id;
     public void setId(int id) {
         this.id = id;
     }
+
 }

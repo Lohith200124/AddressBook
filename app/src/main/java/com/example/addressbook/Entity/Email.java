@@ -6,8 +6,10 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(indices = @Index(value = "email",unique = true))
-public class Email {
+import java.io.Serializable;
+
+@Entity
+public class Email implements Serializable {
     @PrimaryKey(autoGenerate = true)
         int emailId;
     long id;

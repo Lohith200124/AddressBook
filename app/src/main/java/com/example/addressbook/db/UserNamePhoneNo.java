@@ -11,6 +11,9 @@ import com.example.addressbook.Entity.UserName;
 
 import java.util.List;
 
+/**
+ * one-many for username and phone no and email
+ */
 public class UserNamePhoneNo {
     @Embedded
     UserName userName;

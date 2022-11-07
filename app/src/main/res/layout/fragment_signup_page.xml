@@ -14,6 +14,18 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/FirstName"
+            android:hint="fistName"
+            android:layout_gravity="center"></EditText>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/LastName"
+            android:hint="lastName"
+            android:layout_gravity="center"></EditText>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/UserName"
             android:hint="UserName"
             android:layout_gravity="center"></EditText>
@@ -22,13 +34,15 @@
             android:layout_height="wrap_content"
             android:id="@+id/NewPassword"
             android:hint="NewPassWord"
-            android:layout_gravity="center"></EditText>
+            android:layout_gravity="center"
+            android:inputType="textPassword"></EditText>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ReEnterPassword"
             android:hint="enterPassword"
-            android:layout_gravity="center"></EditText>
+            android:layout_gravity="center"
+            android:inputType="textPassword"></EditText>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

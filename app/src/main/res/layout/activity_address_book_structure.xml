@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.CreateFragment"
+    >
+<ScrollView
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true">
@@ -10,7 +13,7 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.AddressBookStructure"
+    tools:context=".Activity.AddressBookStructureActivity"
     android:orientation="vertical">
         <LinearLayout
         android:layout_width="match_parent"
@@ -108,6 +111,73 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/AddressofUser"
+        android:visibility="gone">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/newline1"
+            android:hint="line1"
+            android:textSize="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="5dp"></EditText>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/newline2"
+            android:hint="line2"
+            android:textSize="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="5dp"></EditText>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/newcity"
+            android:hint="city"
+            android:textSize="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="5dp"></EditText>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/newstate"
+            android:hint="state"
+            android:textSize="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="5dp"></EditText>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/newcountry"
+            android:hint="country"
+            android:textSize="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="5dp"></EditText>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/newtype"
+            android:spinnerMode="dropdown"
+            ></Spinner>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/newzipcode"
+            android:hint="zipcode"
+            android:textSize="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="5dp"></EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
         <EditText
             android:layout_width="match_parent"
@@ -135,6 +205,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/EmailLayout"
+        android:visibility="gone">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/newemailAddress"
+            android:hint="EmailAddress"
+            android:textSize="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="5dp"></EditText>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/newtype1"
+            android:spinnerMode="dropdown"
+            ></Spinner>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
         <EditText
             android:layout_width="match_parent"
@@ -158,6 +252,31 @@
             android:layout_height="wrap_content"
             android:id="@+id/addPhone"
             android:text="Add"></Button>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/phoneLinearLayout"
+        android:visibility="gone">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/newphoneNo"
+            android:hint="Phone"
+            android:textSize="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="5dp"></EditText>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/newtype2"
+            android:spinnerMode="dropdown"
+            ></Spinner>
+
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -191,7 +310,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -209,8 +329,19 @@
                 android:id="@+id/FetchPhone"
                 android:text="phoneNo"
                 ></Button>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/saveButton"
+                android:text="save"></Button>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cancelButton"
+                android:text="cancel"></Button>
         </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
 </ScrollView>
+</FrameLayout>

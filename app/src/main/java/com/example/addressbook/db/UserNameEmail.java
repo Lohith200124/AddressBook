@@ -8,6 +8,10 @@ import com.example.addressbook.Entity.UserName;
 
 import java.util.List;
 
+/**
+ * username-email one - many relation
+ */
+
 public class UserNameEmail {
     @Embedded
     UserName username;

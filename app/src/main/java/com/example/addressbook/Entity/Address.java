@@ -5,8 +5,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity
-public class Address {
+public class Address implements Serializable {
     @PrimaryKey(autoGenerate = true)
        public  int address_id;
     long id;
