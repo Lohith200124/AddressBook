@@ -37,20 +37,20 @@ import java.util.List;
 
 public class UpdateAddressBookActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 200;
-    EditText firstName, lastName, state, country, zipcode, line1, line2, city, email, PhoneNo;
-    Spinner type, typeEmail, typePhoneNo;
-    Button add, AddEmail, AddPhoneNo, camera, gallery, fetchPhone, fetchAddress, fetchEmail, save, cancel;
-    EditText Nstate, Ncountry, Nzipcode, Nline1, Nline2, Ncity, Nemail, NPhoneNo;
-    Spinner Ntype, NtypeEmail, NtypePhoneNo;
-    ImageView picture;
-    LinearLayout linearLayoutForAddress, linearLayoutForEmail, linearLayoutForPhone;
+    private   EditText firstName, lastName, state, country, zipcode, line1, line2, city, email, PhoneNo;
+    private   Spinner type, typeEmail, typePhoneNo;
+    private  Button add, AddEmail, AddPhoneNo, camera, gallery, fetchPhone, fetchAddress, fetchEmail, save, cancel;
+    private  EditText Nstate, Ncountry, Nzipcode, Nline1, Nline2, Ncity, Nemail, NPhoneNo;
+    private Spinner Ntype, NtypeEmail, NtypePhoneNo;
+    private ImageView picture;
+    private  LinearLayout linearLayoutForAddress, linearLayoutForEmail, linearLayoutForPhone;
     int countAddress = 0, countEmail = 0, countPhoneNo = 0;
     boolean flag = false;
     private final static int CAMERA_REQ_CODE = 100;
     private final static int GALLERY_REQ_CODE = 150;
-    CheckFor checkFor = new CheckFor();
-    DataBaseHelper db = DataBaseHelper.getDb(this);
-    UserName username;
+    private CheckFor checkFor = new CheckFor();
+    private  DataBaseHelper db = DataBaseHelper.getDb(this);
+    private UserName username;
     ArrayList<Address> AddressArrayList;
     ArrayList<Email> emailArrayList;
     ArrayList<PhoneNumber> phoneNumberArrayList;
@@ -65,7 +65,7 @@ public class UpdateAddressBookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_address_book);
         save = findViewById(R.id.saveButton);
         cancel = findViewById(R.id.cancelButton);
-        camera = findViewById(R.id.camera);
+       /* camera = findViewById(R.id.camera);*/
         gallery = findViewById(R.id.buttonGallery);
         picture = findViewById(R.id.image1);
         firstName = findViewById(R.id.firstName);
@@ -83,9 +83,9 @@ public class UpdateAddressBookActivity extends AppCompatActivity {
         city = findViewById(R.id.city);
         line1 = findViewById(R.id.line1);
         line2 = findViewById(R.id.line2);
-        fetchPhone = findViewById(R.id.FetchPhone);
+    /*    fetchPhone = findViewById(R.id.FetchPhone);
         fetchAddress = findViewById(R.id.FetchAddress);
-        fetchEmail = findViewById(R.id.FetchEmail);
+        fetchEmail = findViewById(R.id.FetchEmail);*/
         typeEmail = findViewById(R.id.type1);
         ArrayAdapter<CharSequence> adapterEmail = ArrayAdapter.createFromResource(this, R.array.type1, android.R.layout.simple_spinner_item);
         adapterEmail.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -562,6 +562,7 @@ public class UpdateAddressBookActivity extends AppCompatActivity {
                             updateBasic();*/
 
               }
+
                 updateRecyclerView();
             }
         });
@@ -686,83 +687,89 @@ public class UpdateAddressBookActivity extends AppCompatActivity {
     public void updateBasic(){
         long id;
         id = idOfUser();
-        if(firstnameCheck(firstName.getText().toString())) {
-            db.dao().updateName(new UserName((int) id, firstName.getText().toString(), lastName.getText().toString()));
+
+          //  db.dao().updateName(new UserName((int) id, lastName.getText().toString()));
+
+            db.dao().updateAddress(new Address(db.dao().getAddressId(id, type.getSelectedItem().toString()),
+                    id, type.getSelectedItem().toString(),
+                    line1.getText().toString(), line2.getText().toString(),
+                    city.getText().toString(), state.getText().toString(),
+                    country.getText().toString(), zipcode.getText().toString()));
+            if (checkFor.validateEmail(email.getText().toString())) {
+                db.dao().updateEmail(new Email(db.dao().getEmailId(id, typeEmail.getSelectedItem().toString()),
+                        id, typeEmail.getSelectedItem().toString(), email.getText().toString()));
+            } else {
+                Toast.makeText(this, "check email", Toast.LENGTH_SHORT).show();
+            }
+            db.dao().updatePhoneNo(new PhoneNumber(db.dao().getPhonenoId(id, typePhoneNo.getSelectedItem().toString()),
+                    id, typePhoneNo.getSelectedItem().toString(), PhoneNo.getText().toString()));
+
+
         }
-        db.dao().updateAddress(new Address(db.dao().getAddressId(id, type.getSelectedItem().toString()),
-                id, type.getSelectedItem().toString(),
-                line1.getText().toString(), line2.getText().toString(),
-                city.getText().toString(), state.getText().toString(),
-                country.getText().toString(), zipcode.getText().toString()));
-        if(checkFor.validateEmail(email.getText().toString())) {
-            db.dao().updateEmail(new Email(db.dao().getEmailId(id, typeEmail.getSelectedItem().toString()),
-                    id, typeEmail.getSelectedItem().toString(), email.getText().toString()));
-        }
-        else{
-            Toast.makeText(this, "check email", Toast.LENGTH_SHORT).show();
-        }
-        db.dao().updatePhoneNo(new PhoneNumber(db.dao().getPhonenoId(id,typePhoneNo.getSelectedItem().toString()),
-                id,typePhoneNo.getSelectedItem().toString(),PhoneNo.getText().toString()));
-    }
 
     /**
      * checks firstname and returns false if exist else true
      * @param str
      * @return bool
      */
-    public boolean firstnameCheck(String str){
-        int firstnameCounter=0;
-        List<UserName> listFirstname = db.dao().getAllUsers();
-        for(int i=0;i< listFirstname.size();i++){
-            if((firstName.getText().toString()).equals(listFirstname.get(i).getFirstName())){
-                Toast.makeText(this, "firstname already exist pls change", Toast.LENGTH_SHORT).show();
-            return false;
-            }
-            firstnameCounter+=1;
-        }
-        if(firstnameCounter>= listFirstname.size()){
-            return true;
-        }
-        return false;
-    }
+//    public boolean firstnameCheck(String str){
+//        int firstnameCounter=0;
+//        List<UserName> listFirstname = db.dao().getAllUsers();
+//        for(int i=0;i< listFirstname.size();i++){
+//            if((firstName.getText().toString()).equals(listFirstname.get(i).getFirstName())){
+//                //Toast.makeText(this, "firstname already exist pls change", Toast.LENGTH_SHORT).show();
+//            return true;
+//            }
+//            firstnameCounter+=1;
+//        }
+//        if(firstnameCounter>= listFirstname.size()){
+//            return false;
+//        }
+//        return false;
+//    }
     /**
      * to update the second  address
      */
     public void NaddressUpdate(){
         long id;
         id= idOfUser();
-        db.dao().updateAddress(new Address(db.dao().getAddressId(id, Ntype.getSelectedItem().toString()),
-                id, Ntype.getSelectedItem().toString(),
-                Nline1.getText().toString(), Nline2.getText().toString(),
-                Ncity.getText().toString(), Nstate.getText().toString(),
-                Ncountry.getText().toString(), Nzipcode.getText().toString()));
+            db.dao().updateAddress(new Address(db.dao().getAddressId(id, Ntype.getSelectedItem().toString()),
+                    id, Ntype.getSelectedItem().toString(),
+                    Nline1.getText().toString(), Nline2.getText().toString(),
+                    Ncity.getText().toString(), Nstate.getText().toString(),
+                    Ncountry.getText().toString(), Nzipcode.getText().toString()));
+
 
     }
     /**
      * to update the second  email
      */
-        public void  NemailUpdate(){
+        public void  NemailUpdate() {
             long id;
-            id= idOfUser();
-            if(checkFor.validateEmail(  Nemail.getText().toString())){
-            db.dao().updateEmail(new Email(db.dao().getEmailId(id, NtypeEmail.getSelectedItem().toString()),
-                    id, NtypeEmail.getSelectedItem().toString(),
-                  Nemail.getText().toString()));}
-            else{
-                Toast.makeText(this, "check format", Toast.LENGTH_SHORT).show();
-            }
+            id = idOfUser();
+
+                if (checkFor.validateEmail(Nemail.getText().toString())) {
+                    db.dao().updateEmail(new Email(db.dao().getEmailId(id, NtypeEmail.getSelectedItem().toString()),
+                            id, NtypeEmail.getSelectedItem().toString(),
+                            Nemail.getText().toString()));
+                } else {
+                    Toast.makeText(this, "check format", Toast.LENGTH_SHORT).show();
+                }
+
         }
 
     /**
      * to update the second  phonenumber
      */
-    public void NphoneNoUpdate(){
-            long id;
-            id= idOfUser();
+    public void NphoneNoUpdate() {
+        long id;
+        id = idOfUser();
+
             db.dao().updatePhoneNo(new PhoneNumber(db.dao().getPhonenoId(id, NtypePhoneNo.getSelectedItem().toString()),
                     id, NtypePhoneNo.getSelectedItem().toString(),
                     NPhoneNo.getText().toString()));
-        }
+
+    }
 
     /**
      * to tell the recyclerview that values are updated

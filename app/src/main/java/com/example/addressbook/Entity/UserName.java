@@ -30,8 +30,9 @@ int id;
         this.lastName = lastName;
     }
     @Ignore
-    public UserName(@NonNull String firstName) {
-        this.firstName = firstName;
+    public UserName(int id,@NonNull String lastName) {
+        this.id = id;
+        this.lastName = lastName;
     }
 
 

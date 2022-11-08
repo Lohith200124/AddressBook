@@ -19,11 +19,11 @@ import java.util.List;
  * activity which tells us about the passwords
  */
 public class ForgotPassword extends AppCompatActivity {
-    EditText UserName, HeroName;
-    TextView yourPassword;
-    Button Next;
-    DataBaseHelper db = DataBaseHelper.getDb(this);
-    CheckFor checkFor = new CheckFor();
+    private  EditText UserName, HeroName;
+    private   TextView yourPassword;
+    private   Button Next;
+    private  DataBaseHelper db = DataBaseHelper.getDb(this);
+    private    CheckFor checkFor = new CheckFor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

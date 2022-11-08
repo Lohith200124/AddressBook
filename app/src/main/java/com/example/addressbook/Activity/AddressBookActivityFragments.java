@@ -10,8 +10,8 @@ import com.example.addressbook.R;
 import com.google.android.material.tabs.TabLayout;
 
 public class AddressBookActivityFragments extends AppCompatActivity {
-    TabLayout tabLayout;
-    ViewPager viewPager;
+  private  TabLayout tabLayout;
+   private ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -21,8 +21,8 @@ import com.example.addressbook.R;
  * it is a home page having tool bar and (recylerview floating action button) - in home fragment
  */
 public class HomePageActivity extends AppCompatActivity {
-    Toolbar toolBar;
-    Button create;
+    private  Toolbar toolBar;
+    private  Button create;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

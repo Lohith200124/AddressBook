@@ -44,15 +44,14 @@ import java.util.regex.Pattern;
  *to insert the values it is used for creation
  */
 public class AddressBookStructureActivity extends AppCompatActivity {
-    EditText firstName,lastName,state,country,zipcode,line1,line2,city,email,PhoneNo;
-    Spinner type,typeEmail,typePhoneNo;
-    Button add,AddEmail,AddPhoneNo,gallery,fetchEmail,save,cancel;
-    EditText Nstate,Ncountry,Nzipcode,Nline1,Nline2,Ncity,Nemail,NPhoneNo;
-    Spinner Ntype,NtypeEmail,NtypePhoneNo;
-    ImageView picture;
-    LinearLayout linearLayoutForAddress,linearLayoutForEmail,linearLayoutForPhone;
+ private    EditText firstName,lastName,state,country,zipcode,line1,line2,city,email,PhoneNo;
+    private  Spinner type,typeEmail,typePhoneNo;
+    private  Button add,AddEmail,AddPhoneNo,gallery,fetchEmail,save,cancel;
+    private   EditText Nstate,Ncountry,Nzipcode,Nline1,Nline2,Ncity,Nemail,NPhoneNo;
+    private  Spinner Ntype,NtypeEmail,NtypePhoneNo;
+    private  ImageView picture;
+    private  LinearLayout linearLayoutForAddress,linearLayoutForEmail,linearLayoutForPhone;
     int countAddress=0,countEmail=0,countPhoneNo=0;
-    private   final static int CAMERA_REQ_CODE = 100;
     private   final static int GALLERY_REQ_CODE = 150;
     CheckFor checkFor = new CheckFor();
     DataBaseHelper db = DataBaseHelper.getDb(this);

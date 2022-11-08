@@ -16,8 +16,8 @@ import com.google.android.material.tabs.TabLayout;
  *
  */
 public class ActivtyLoginFragments extends AppCompatActivity {
-    TabLayout tabLayout;
-    ViewPager viewPager;
+  private  TabLayout tabLayout;
+  private  ViewPager viewPager;
 
     /**
      * created fragment manger and tab layout
