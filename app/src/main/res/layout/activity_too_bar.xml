@@ -13,7 +13,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:titleTextColor="@color/white"
-            android:id="@+id/ToolBar"></androidx.appcompat.widget.Toolbar>
+            android:id="@+id/ToolBar">
+
+        </androidx.appcompat.widget.Toolbar>
+
     </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout

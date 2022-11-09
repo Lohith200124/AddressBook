@@ -45,13 +45,13 @@ public class LoginPage extends Fragment {
        userName = view.findViewById(R.id.emailAddress);
        password = view.findViewById(R.id.password);
        signin = view.findViewById(R.id.signIn);
-       reset = view.findViewById(R.id.reset);
+      // reset = view.findViewById(R.id.reset);
         ForgotPassword = view.findViewById(R.id.forgotPassword);
         DataBaseHelper dataBaseHelper = DataBaseHelper.getDb(getContext());
         SharedPreferences sharedPreferences;
         sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("flag", true);
+        editor.putBoolean("flag", true).apply();
         Intent intent;
         intent = new Intent(getActivity(), HomePageActivity.class);
        signin.setOnClickListener(new View.OnClickListener() {

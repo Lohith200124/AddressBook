@@ -562,8 +562,11 @@ public class UpdateAddressBookActivity extends AppCompatActivity {
                             updateBasic();*/
 
               }
-
-                updateRecyclerView();
+try {
+    updateRecyclerView();
+}catch (NullPointerException e){
+    e.printStackTrace();
+}
             }
         });
         AddEmail.setOnClickListener(new View.OnClickListener() {

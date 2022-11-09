@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,18 +39,21 @@ import com.example.addressbook.db.UserInfo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * recyclerview adapter
  */
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
     Context context;
    public List<UserInfo> userInfo = new ArrayList<UserInfo>() ;
+   private List<UserInfo> searchUserinfo = new ArrayList<>();
     DataBaseHelper db = DataBaseHelper.getDb(context);
     public static final int PERMISSION_REQUEST_CODE =120;
   public  RecyclerViewAdapter(Context context, List<UserInfo> userInfo){
         this.context = context;
         this.userInfo = userInfo;
+        searchUserinfo = new ArrayList<>(userInfo);
     }
 
     @NonNull
@@ -101,8 +106,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             alertDailog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    db.dao().delUserName1ById(userInfo.get(position).getUserName().getId());
-                    db.dao().delImageById((int)userInfo.get(position).getImage().getId());
+                    db.dao().delUserName1ById(userInfo.get(position-1).getUserName().getId());
+                    try {
+                        db.dao().delImageById((int) userInfo.get(position).getImage().getId());
+                    }catch (NullPointerException e){
+                        e.printStackTrace();
+                    }
                     for(int j=0;j<=userInfo.get(position).getEmailList().size()-1;j++) {
                         db.dao().delEmailbyId(userInfo.get(position).getEmailList().get(j).getEmailId());
                     }
@@ -156,6 +165,39 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public int getItemCount() {
         return userInfo.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+    private  Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<UserInfo> userInfoList = new ArrayList<>();
+            if(charSequence == null||charSequence == ""){
+                userInfoList.addAll(searchUserinfo);
+            }
+            else{
+                String pattrenOfString = charSequence.toString().toLowerCase().trim();
+                for (UserInfo user:userInfoList)
+                {
+                 if((user.getUserName().getFirstName()).contains(pattrenOfString)){
+                     userInfoList.add(user);
+                 }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = userInfoList;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            searchUserinfo.clear();
+            searchUserinfo.addAll((List<UserInfo>) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView,LastName,Email;

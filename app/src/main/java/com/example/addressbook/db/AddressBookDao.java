@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.example.addressbook.Entity.Address;
@@ -154,6 +155,7 @@ public String getImageUri(int id);
      * @param id
      * @return
      */
+    @Transaction
     @Query("select * from PhoneNumber where id=:id")
     public List<UserNamePhoneNo> getPhone(int id);
 
@@ -186,6 +188,7 @@ public String getImageUri(int id);
      * @param id
      * @return
      */
+    @Transaction
     @Query("select * from UserName where id=:id")
     public UserInfo getUserInfoObj(int id);
 

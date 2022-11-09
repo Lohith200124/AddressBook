@@ -23,10 +23,12 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+                SharedPreferences.Editor edit = sharedPreferences.edit();
                 Boolean check = sharedPreferences.getBoolean("flag",false);
                 Intent intent;
                 if (check) {
                     intent = new Intent(SplashActivity.this, HomePageActivity.class);
+                   // edit.putBoolean("login",true);
                 }
                 else{
                     intent = new Intent(SplashActivity.this, ActivtyLoginFragments.class);

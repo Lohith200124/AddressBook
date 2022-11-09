@@ -46,7 +46,7 @@ import java.util.regex.Pattern;
 public class AddressBookStructureActivity extends AppCompatActivity {
  private    EditText firstName,lastName,state,country,zipcode,line1,line2,city,email,PhoneNo;
     private  Spinner type,typeEmail,typePhoneNo;
-    private  Button add,AddEmail,AddPhoneNo,gallery,fetchEmail,save,cancel;
+    private  Button add,AddEmail,AddPhoneNo,gallery,save,cancel;
     private   EditText Nstate,Ncountry,Nzipcode,Nline1,Nline2,Ncity,Nemail,NPhoneNo;
     private  Spinner Ntype,NtypeEmail,NtypePhoneNo;
     private  ImageView picture;
@@ -66,7 +66,6 @@ public class AddressBookStructureActivity extends AppCompatActivity {
         linearLayoutForAddress = findViewById(R.id.AddressofUser);
         linearLayoutForEmail = findViewById(R.id.EmailLayout);
         linearLayoutForPhone = findViewById(R.id.phoneLinearLayout);
-
         gallery = findViewById(R.id.buttonGallery);
         picture = findViewById(R.id.image1);
         firstName = findViewById(R.id.firstName);
@@ -84,7 +83,6 @@ public class AddressBookStructureActivity extends AppCompatActivity {
         city=findViewById(R.id.city);
         line1=findViewById(R.id.line1);
         line2 = findViewById(R.id.line2);
-        fetchEmail = findViewById(R.id.FetchEmail);
         typeEmail = findViewById(R.id.type1);
         ArrayAdapter<CharSequence> adapterEmail=ArrayAdapter.createFromResource(this, R.array.type1, android.R.layout.simple_spinner_item);
         adapterEmail.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -349,13 +347,15 @@ saveButtonCount+=1;
                 countryStr = country.getText().toString();
                 zipcodeStr = zipcode.getText().toString();
 
-if(saveButtonCount<=1) {
+
     if (line1Str.equals("") || cityStr.equals("") || stateStr.equals("") ||
             countryStr.equals("") || zipcodeStr.equals("") || emailStr.equals("") || phonNoStr.equals("")
     ) {
         Toast.makeText(AddressBookStructureActivity.this, "make sure you enter all fields and follow the rules", Toast.LENGTH_SHORT).show();
         clean();
-    } else {
+    }
+    else {
+        if(saveButtonCount<=1) {
         if (countAddress == 0 && countEmail == 0 && countPhoneNo == 0) {
             insertBasic();
                           /*  homeFragment.lis
@@ -487,11 +487,19 @@ if(saveButtonCount<=1) {
                 }
             }
         }
+        Intent intent = new Intent(AddressBookStructureActivity.this,HomeFragment.class);
+        startActivity(intent);
+            try {
+                updateRecyclerView();
+            }
+            catch (NullPointerException e){
+                e.printStackTrace();
+            }
     }
-updateRecyclerView();
 
-}else{
-    Toast.makeText(AddressBookStructureActivity.this, "move to update", Toast.LENGTH_SHORT).show();
+    else{
+            Toast.makeText(AddressBookStructureActivity.this, "move to update", Toast.LENGTH_SHORT).show();
+        }
 }
             }});
         cancel.setOnClickListener(new View.OnClickListener() {

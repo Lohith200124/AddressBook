@@ -38,8 +38,8 @@
                         android:layout_gravity="center"
                         android:hint="Email address"
                         android:id="@+id/emailAddress"
-                        android:textSize="30dp"
-                        android:textStyle="bold"></EditText>
+                        android:textSize="20dp"
+                        android:textStyle="italic"></EditText>
                 </LinearLayout>
 
 
@@ -63,8 +63,8 @@
                         android:layout_gravity="center"
                         android:hint="Password"
                         android:id="@+id/password"
-                        android:textSize="30dp"
-                        android:textStyle="bold"
+                        android:textSize="20dp"
+                        android:textStyle="italic"
                         android:inputType="textPassword"></EditText>
                 </LinearLayout>
 
@@ -80,12 +80,7 @@
                     android:layout_height="wrap_content"
                     android:text="Signin"
                     android:id="@+id/signIn"></Button>
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Reset"
-                    android:layout_marginLeft="40dp"
-                    android:id="@+id/reset"></Button>
+
 
             </LinearLayout>
             <LinearLayout
