@@ -58,7 +58,7 @@ String fName;
     public boolean onCreateOptionsMenu(Menu menu) {
         new MenuInflater(this).inflate(R.menu.menu_options,menu);
         menu.getItem(0).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        menu.getItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+      //  menu.getItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     /*    MenuItem searchItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -91,8 +91,9 @@ String fName;
            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
            startActivity(intent);
 
-       }else if(itemId == R.id.search){
-            SearchManager searchManager = (SearchManager) HomePageActivity.this.getSystemService(Context.SEARCH_SERVICE);
+       }
+        //else if(itemId == R.id.search){
+            /*SearchManager searchManager = (SearchManager) HomePageActivity.this.getSystemService(Context.SEARCH_SERVICE);
 
             SearchView searchView = null;
             if (item!= null) {
@@ -121,6 +122,7 @@ try{
         } });//
 }catch(NullPointerException e){
     e.printStackTrace();
-}
-}  return super.onOptionsItemSelected(item);
+}*/
+//}
+return super.onOptionsItemSelected(item);
     }}
