@@ -40,7 +40,7 @@ public class LoginPage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+      /*  // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login_page, container, false);
        userName = view.findViewById(R.id.emailAddress);
        password = view.findViewById(R.id.password);
@@ -51,7 +51,7 @@ public class LoginPage extends Fragment {
         SharedPreferences sharedPreferences;
         sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("flag", true).apply();
+        editor.putBoolean("flag", false).apply();
         Intent intent;
         intent = new Intent(getActivity(), HomePageActivity.class);
        signin.setOnClickListener(new View.OnClickListener() {
@@ -88,9 +88,9 @@ public class LoginPage extends Fragment {
                 Intent intent = new Intent(getActivity(), com.example.addressbook.Activity.ForgotPassword.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
-        return view;
+        return inflater.inflate(R.layout.fragment_login_page, container, false);
 
     }
 }

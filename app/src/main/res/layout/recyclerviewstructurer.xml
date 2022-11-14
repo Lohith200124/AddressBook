@@ -2,11 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/linearLayout1">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="25dp"
+        android:elevation="8dp"
+        app:cardElevation="10dp"
+        app:cardPreventCornerOverlap="true"
+        android:paddingTop="15dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,13 +21,31 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+            <androidx.cardview.widget.CardView
+                android:layout_width="155dp"
+                android:layout_height="135dp"
+                app:cardCornerRadius="250dp"
+                app:cardBackgroundColor="@color/white"
+                android:elevation="8dp"
+                app:cardElevation="10dp"
+                app:cardPreventCornerOverlap="true"
+                android:paddingTop="15dp"
+                >
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:cardCornerRadius="250dp"
+                android:layout_gravity="center">
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:id="@+id/imageOfPerson"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_baseline_contact_phone_24"
                 ></ImageView>
-
+            </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,30 +55,43 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/MainFirstName"
-            android:textSize="25dp"
-            android:text=""
-            android:textColor="#FFF"
-            android:background="#EF1616"
+            android:textSize="35dp"
+            android:textStyle="bold"
+            android:textColor="#090909"
+            android:background="#F8F8F8"
             android:textAlignment="center"
             android:drawableBottom="@color/black"></TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/MainLastName"
-                android:textSize="25dp"
+                android:id="@+id/PhoneNumber"
+                android:textSize="20dp"
                 android:text=""
-                android:textColor="#FFF"
-                android:background="#EF1616"
+                android:textStyle="italic"
+                android:textColor="#090909"
+                android:background="#F8F8F8"
                 android:textAlignment="center"
                 android:drawableBottom="@color/black"></TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/MainEmailName"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:text=""
-                android:textColor="#FFF"
-                android:background="#EF1616"
+                android:textStyle="italic"
+                android:textColor="#090909"
+                android:background="#F8F8F8"
+                android:textAlignment="center"
+                android:drawableBottom="@color/black"></TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/Address"
+                android:textSize="20dp"
+                android:text=""
+                android:textStyle="italic"
+                android:textColor="#090909"
+                android:background="#F8F8F8"
                 android:textAlignment="center"
                 android:drawableBottom="@color/black"></TextView>
 

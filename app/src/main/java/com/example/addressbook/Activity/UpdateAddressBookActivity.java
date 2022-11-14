@@ -1,7 +1,9 @@
 package com.example.addressbook.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -11,6 +13,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -54,9 +59,11 @@ public class UpdateAddressBookActivity extends AppCompatActivity {
     ArrayList<Address> AddressArrayList;
     ArrayList<Email> emailArrayList;
     ArrayList<PhoneNumber> phoneNumberArrayList;
-    RecyclerViewAdapter recyclerViewAdapter;
+    RecyclerViewAdapter recyclerViewAdapter ;
     Image image;
     Uri uri;
+    Toolbar toolbar;
+    AddressBookStructureActivity addressBookStructureActivity = new AddressBookStructureActivity();
     int position;
     // ArrayList<UserInfo> AddressArrayList;
     @Override
@@ -120,7 +127,11 @@ public class UpdateAddressBookActivity extends AppCompatActivity {
         username = (UserName) getIntent().getSerializableExtra("UserName");
         firstName.setText(username.getFirstName().toString());
         lastName.setText(username.getLastName().toString());
-
+        toolbar = (Toolbar) findViewById(R.id.toolBarForView);
+        setSupportActionBar(toolbar);
+        if(getSupportActionBar()!= null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         linearLayoutForAddress = findViewById(R.id.AddressLinearLayout);
         linearLayoutForPhone = findViewById(R.id.phoneLinearLayout);
         linearLayoutForEmail = findViewById(R.id.EmailLayout);
@@ -222,7 +233,6 @@ public class UpdateAddressBookActivity extends AppCompatActivity {
                             NaddressUpdate();
                             NemailUpdate();
                             NphoneNoUpdate();
-
                         }
                     }
                     else if(AddressArrayList.size() >= 2 && emailArrayList.size() >= 2 &&
@@ -366,7 +376,7 @@ public class UpdateAddressBookActivity extends AppCompatActivity {
                      }else if(countAddress>=1&&countEmail>=0&&countPhoneNo>=0){
                          if ((type.getSelectedItem().toString()).equals(Ntype.getSelectedItem().toString()) )
                          {
-                             Toast.makeText(UpdateAddressBookActivity.this, "already exisit", Toast.LENGTH_SHORT).show();
+                             Toast.makeText(UpdateAddressBookActivity.this, "already exisit address", Toast.LENGTH_SHORT).show();
                          }
                          else
                          {
@@ -439,7 +449,15 @@ public class UpdateAddressBookActivity extends AppCompatActivity {
                                 NphoneNoUpdate();
                             }
                         }else if(countAddress>=0&&countPhoneNo>=0){
-                            updateBasic();
+                            if ((typeEmail.getSelectedItem().toString()).equals(NtypeEmail.getSelectedItem().toString()))
+                            {
+                                Toast.makeText(UpdateAddressBookActivity.this, "already exisit", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                updateBasic();
+                                NemailUpdate();
+                            }
                         }
                     }
                     else if(AddressArrayList.size() >= 2 && emailArrayList.size() >= 1 &&
@@ -504,34 +522,49 @@ public class UpdateAddressBookActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    else if(AddressArrayList.size() >= 2 && emailArrayList.size() >= 2 &&
-                            phoneNumberArrayList.size() >= 1){
-                        if(countPhoneNo>=1){
+                    else if(AddressArrayList.size() >= 1 && emailArrayList.size() >= 1 &&
+                            phoneNumberArrayList.size() >= 2) {
+                        if (countAddress >= 1 && countEmail >= 1) {
                             if ((type.getSelectedItem().toString()).equals(Ntype.getSelectedItem().toString()) &&
                                     (typeEmail.getSelectedItem().toString()).equals(NtypeEmail.getSelectedItem().toString()) &&
-                                    (typePhoneNo.getSelectedItem().toString()).equals(NtypePhoneNo.getSelectedItem().toString()))
-                            {
+                                    (typePhoneNo.getSelectedItem().toString()).equals(NtypePhoneNo.getSelectedItem().toString())) {
                                 Toast.makeText(UpdateAddressBookActivity.this, "already exisit", Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
+                            } else {
                                 updateBasic();
                                 NaddressUpdate();
                                 NemailUpdate();
                                 NphoneNoUpdate();
                             }
-                        }
-                        else{
+                        } else if (countAddress >= 0 &&countEmail >= 1) {
+                            if (
+                                    (typeEmail.getSelectedItem().toString()).equals(NtypeEmail.getSelectedItem().toString()) &&
+                                    (typePhoneNo.getSelectedItem().toString()).equals(NtypePhoneNo.getSelectedItem().toString())) {
+                                Toast.makeText(UpdateAddressBookActivity.this, "already exisit", Toast.LENGTH_SHORT).show();
+                            } else {
+                                updateBasic();
+                                NemailUpdate();
+                                NphoneNoUpdate();
+                            }
+                        } else if(countAddress >= 1 &&countEmail >= 0){
                             if ((type.getSelectedItem().toString()).equals(Ntype.getSelectedItem().toString()) &&
-                                    (typeEmail.getSelectedItem().toString()).equals(NtypeEmail.getSelectedItem().toString()))
+                                    (typePhoneNo.getSelectedItem().toString()).equals(NtypePhoneNo.getSelectedItem().toString())) {
+                                Toast.makeText(UpdateAddressBookActivity.this, "already exisit", Toast.LENGTH_SHORT).show();
+                            } else {
+                                updateBasic();
+                                NaddressUpdate();
+                                NphoneNoUpdate();
+                            }
+                        }
+
+                        else{
+                            if ( (typePhoneNo.getSelectedItem().toString()).equals(NtypePhoneNo.getSelectedItem().toString()))
                             {
                                 Toast.makeText(UpdateAddressBookActivity.this, "already exisit", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
                                 updateBasic();
-                                NaddressUpdate();
-                                NemailUpdate();
+                               NphoneNoUpdate();
 
                             }
                         }
@@ -560,13 +593,16 @@ public class UpdateAddressBookActivity extends AppCompatActivity {
 
                         } else {
                             updateBasic();*/
-
+                    Intent intent = new Intent(UpdateAddressBookActivity.this,HomePageActivity.class);
+                    startActivity(intent);
+                    try {
+                        updateRecyclerView();
+                        Toast.makeText(UpdateAddressBookActivity.this, "hello", Toast.LENGTH_SHORT).show();
+                    }catch (NullPointerException e){
+                        e.printStackTrace();
+                    }
               }
-try {
-    updateRecyclerView();
-}catch (NullPointerException e){
-    e.printStackTrace();
-}
+
             }
         });
         AddEmail.setOnClickListener(new View.OnClickListener() {
@@ -583,6 +619,25 @@ try {
                         linearLayoutForPhone.setVisibility(View.VISIBLE);
                     }
                 });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        new MenuInflater(this).inflate(R.menu.update_menu,menu);
+        menu.getItem(0).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if(itemId == R.id.homeButton){
+            Intent intent = new Intent(this,HomePageActivity.class);
+            startActivity(intent);
+        }else if(itemId == android.R.id.home){
+            super.onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -687,28 +742,31 @@ try {
     /**
      *updates the primary fields
      */
-    public void updateBasic(){
+    public void updateBasic() {
         long id;
         id = idOfUser();
 
-          //  db.dao().updateName(new UserName((int) id, lastName.getText().toString()));
-
-            db.dao().updateAddress(new Address(db.dao().getAddressId(id, type.getSelectedItem().toString()),
-                    id, type.getSelectedItem().toString(),
-                    line1.getText().toString(), line2.getText().toString(),
-                    city.getText().toString(), state.getText().toString(),
-                    country.getText().toString(), zipcode.getText().toString()));
+        //  db.dao().updateName(new UserName((int) id, lastName.getText().toString()));
+        if (checkFor.phoneNumberValidation(PhoneNo.getText().toString())) {
             if (checkFor.validateEmail(email.getText().toString())) {
+                db.dao().updateAddress(new Address(db.dao().getAddressId(id, type.getSelectedItem().toString()),
+                        id, type.getSelectedItem().toString(),
+                        line1.getText().toString(), line2.getText().toString(),
+                        city.getText().toString(), state.getText().toString(),
+                        country.getText().toString(), zipcode.getText().toString()));
+
                 db.dao().updateEmail(new Email(db.dao().getEmailId(id, typeEmail.getSelectedItem().toString()),
                         id, typeEmail.getSelectedItem().toString(), email.getText().toString()));
-            } else {
+
+                db.dao().updatePhoneNo(new PhoneNumber(db.dao().getPhonenoId(id, typePhoneNo.getSelectedItem().toString()),
+                        id, typePhoneNo.getSelectedItem().toString(), PhoneNo.getText().toString()));
+            } else{
                 Toast.makeText(this, "check email", Toast.LENGTH_SHORT).show();
             }
-            db.dao().updatePhoneNo(new PhoneNumber(db.dao().getPhonenoId(id, typePhoneNo.getSelectedItem().toString()),
-                    id, typePhoneNo.getSelectedItem().toString(), PhoneNo.getText().toString()));
-
-
+        } else{
+            Toast.makeText(UpdateAddressBookActivity.this, "check format of phone", Toast.LENGTH_SHORT).show();
         }
+    }
 
     /**
      * checks firstname and returns false if exist else true
@@ -736,11 +794,23 @@ try {
     public void NaddressUpdate(){
         long id;
         id= idOfUser();
+        if(AddressArrayList.size()>=2) {
             db.dao().updateAddress(new Address(db.dao().getAddressId(id, Ntype.getSelectedItem().toString()),
                     id, Ntype.getSelectedItem().toString(),
                     Nline1.getText().toString(), Nline2.getText().toString(),
                     Ncity.getText().toString(), Nstate.getText().toString(),
                     Ncountry.getText().toString(), Nzipcode.getText().toString()));
+        }else{
+
+            db.dao().updateAddress(new Address(db.dao().getAddressId(id, Ntype.getSelectedItem().toString()),
+                    id, Ntype.getSelectedItem().toString(),
+                    Nline1.getText().toString(), Nline2.getText().toString(),
+                    Ncity.getText().toString(), Nstate.getText().toString(),
+                    Ncountry.getText().toString(), Nzipcode.getText().toString()));
+            Toast.makeText(UpdateAddressBookActivity.this, "inserted new address", Toast.LENGTH_SHORT).show();
+           insertNAddress(id);
+
+        }
 
 
     }
@@ -750,7 +820,7 @@ try {
         public void  NemailUpdate() {
             long id;
             id = idOfUser();
-
+            if(emailArrayList.size()>=2) {
                 if (checkFor.validateEmail(Nemail.getText().toString())) {
                     db.dao().updateEmail(new Email(db.dao().getEmailId(id, NtypeEmail.getSelectedItem().toString()),
                             id, NtypeEmail.getSelectedItem().toString(),
@@ -758,7 +828,12 @@ try {
                 } else {
                     Toast.makeText(this, "check format", Toast.LENGTH_SHORT).show();
                 }
-
+            }else{
+                db.dao().updateEmail(new Email(db.dao().getEmailId(id, NtypeEmail.getSelectedItem().toString()),
+                        id, NtypeEmail.getSelectedItem().toString(),
+                        Nemail.getText().toString()));
+                insertNEmail(id);
+            }
         }
 
     /**
@@ -767,10 +842,21 @@ try {
     public void NphoneNoUpdate() {
         long id;
         id = idOfUser();
+if(phoneNumberArrayList.size()>=2){
+    if(checkFor.phoneNumberValidation(NPhoneNo.getText().toString())) {
+        db.dao().updatePhoneNo(new PhoneNumber(db.dao().getPhonenoId(id, NtypePhoneNo.getSelectedItem().toString()),
+                id, NtypePhoneNo.getSelectedItem().toString(),
+                NPhoneNo.getText().toString()));
+    }else{
+        Toast.makeText(UpdateAddressBookActivity.this, "phonenumber format invalid", Toast.LENGTH_SHORT).show();
+    }
+}else{
+    db.dao().updatePhoneNo(new PhoneNumber(db.dao().getPhonenoId(id, NtypePhoneNo.getSelectedItem().toString()),
+            id, NtypePhoneNo.getSelectedItem().toString(),
+            NPhoneNo.getText().toString()));
+    insertNPhoneNo(id);
+}
 
-            db.dao().updatePhoneNo(new PhoneNumber(db.dao().getPhonenoId(id, NtypePhoneNo.getSelectedItem().toString()),
-                    id, NtypePhoneNo.getSelectedItem().toString(),
-                    NPhoneNo.getText().toString()));
 
     }
 
@@ -778,12 +864,28 @@ try {
      * to tell the recyclerview that values are updated
      */
     public void updateRecyclerView(){
-            recyclerViewAdapter.userInfo.set(position,new UserInfo(new UserName((int)idOfUser(),
-                    firstName.getText().toString(),lastName.getText().toString()),
-                    new Image()
-                    ,db.dao().getPhoneList((int)idOfUser()),db.dao().getEmail((int)idOfUser()),
-                    db.dao().getAddress((int)idOfUser()) ));
-            recyclerViewAdapter.notifyItemChanged(position);
+            if(countPhoneNo>=1||countAddress>=1||countEmail>=1){
+                recyclerViewAdapter.userInfo.set(position,new UserInfo(new UserName((int)idOfUser(),
+                        firstName.getText().toString(),lastName.getText().toString()),
+                        new Image()
+                        ,db.dao().getPhoneList((int)idOfUser()),db.dao().getEmail((int)idOfUser()),
+                        db.dao().getAddress((int)idOfUser())));
+                recyclerViewAdapter.notifyItemChanged(position);
+                recyclerViewAdapter.userInfo.add(position,new UserInfo(new UserName((int)idOfUser(),
+                        firstName.getText().toString(),lastName.getText().toString()),
+                        new Image()
+                        ,db.dao().getPhoneList((int)idOfUser()),db.dao().getEmail((int)idOfUser()),
+                        db.dao().getAddress((int)idOfUser())));
+                recyclerViewAdapter.notifyDataSetChanged();
+            }else{
+                Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
+                recyclerViewAdapter.userInfo.set(position,new UserInfo(new UserName((int)idOfUser(),
+                        firstName.getText().toString(),lastName.getText().toString()),
+                        new Image()
+                        ,db.dao().getPhoneList((int)idOfUser()),db.dao().getEmail((int)idOfUser()),
+                        db.dao().getAddress((int)idOfUser()) ));
+                recyclerViewAdapter.notifyItemChanged(position);
+            }
         }
 
     /**
@@ -805,5 +907,132 @@ try {
             }
         }
     }
+    public boolean AddressCheck(ArrayList<Address> list){
+        int counter=0;
+        if(list.size()>=2){
+            Toast.makeText(this, "full", Toast.LENGTH_SHORT).show();
+        }else if(list.size() <= 1) {
+            for(int i=0;i<list.size();i++){
+              /* Ntype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                   @Override
+                   public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                       item = String.valueOf(Ntype.getItemAtPosition(Ntype.getSelectedItemPosition()));
+                       //return item;
+                   }
+
+                   @Override
+                   public void onNothingSelected(AdapterView<?> adapterView) {
+
+                   }
+               });*/
+                if ((list.get(i).getType()).equals(Ntype.getSelectedItem().toString())){
+                    Toast.makeText(this, "type already exist in address", Toast.LENGTH_SHORT).show();
+                    return  false;
+                }
+                counter+=1;
+            }
+            if(counter==list.size())
+            {
+                return  true;
+            }
+        }
+        return true;
     }
+
+    /**
+     * to insert another or second address
+     * @param id
+     */
+    public void insertNAddress(long id){
+        ArrayList<Address> addressArrayList = (ArrayList<Address>) db.dao().getAddress((int)id);
+        if(AddressCheck(addressArrayList)){
+            db.dao().insertAddress(new Address(id, Ntype.getSelectedItem().toString(), Nline1.getText().toString(), Nline2.getText().toString(),
+                    Ncity.getText().toString(), Nstate.getText().toString(), Ncountry.getText().toString(), Nzipcode.getText().toString()));
+
+        } else{
+            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public boolean EmailCheck(ArrayList<Email> list){
+        int counter=0;
+        if(list.size()>=2){
+            Toast.makeText(this, "full", Toast.LENGTH_SHORT).show();
+        }else if(list.size() >= 1) {
+            for(int i=0;i<list.size();i++){
+                if ((list.get(i).getType()).equals(Ntype.getSelectedItem().toString())){
+                    Toast.makeText(this, "type already exist in address", Toast.LENGTH_SHORT).show();
+                    return  false;
+                }
+                counter+=1;
+            }
+            if(counter==list.size())
+            {
+                return  true;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * to insert new email id
+     * @param id
+     */
+    public void insertNEmail(long id) {
+        ArrayList<Email> EmailList = (ArrayList<Email>) db.dao().getEmail((int) id);
+        if (EmailCheck(EmailList)) {
+            if (checkFor.validateEmail(Nemail.getText().toString())) {
+                db.dao().insertEmail(new Email(id, NtypeEmail.getSelectedItem().toString(), Nemail.getText().toString()));
+            } else {
+                Nemail.setText("");
+                Toast.makeText(UpdateAddressBookActivity.this, "follow the email convention1", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else{
+            Toast.makeText(this, "full", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * to check the type of the field and to stop the duplicate types in phone number
+     * @param list
+     * @return bool
+     */
+    public boolean PhoneNoCheck(ArrayList<PhoneNumber> list){
+        int counter=0;
+        if(list.size()>=2){
+            Toast.makeText(this, "full", Toast.LENGTH_SHORT).show();
+        }else if(list.size() <= 1) {
+            for(int i=0;i<list.size();i++){
+                if ((list.get(i).getType()).equals(Ntype.getSelectedItem().toString())){
+                    Toast.makeText(this, "type already exist in address", Toast.LENGTH_SHORT).show();
+                    return  false;
+                }
+                counter+=1;
+            }
+            if(counter==list.size())
+            {
+                return  true;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * to insert second phonenumber
+     * @param id
+     */
+    public void insertNPhoneNo(long id) {
+        ArrayList<PhoneNumber> phoneList = (ArrayList<PhoneNumber>) db.dao().getPhoneList((int)id);
+        if (PhoneNoCheck(phoneList)) {
+            if (checkFor.phoneNumberValidation(NPhoneNo.getText().toString())) {
+                db.dao().insertPhone(new PhoneNumber(id, NtypePhoneNo.getSelectedItem().toString(), NPhoneNo.getText().toString()));
+            }else{
+                Toast.makeText(this, "wrong format", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else{
+            Toast.makeText(this, "full", Toast.LENGTH_SHORT).show();
+        }
+    }
+}
 

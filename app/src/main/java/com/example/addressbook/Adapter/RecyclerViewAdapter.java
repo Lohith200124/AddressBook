@@ -30,7 +30,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.addressbook.Activity.HomePageActivity;
 import com.example.addressbook.Activity.UpdateAddressBookActivity;
+import com.example.addressbook.Activity.ViewAddressBook;
+import com.example.addressbook.Entity.Address;
+import com.example.addressbook.Entity.Email;
 import com.example.addressbook.Entity.Image;
+import com.example.addressbook.Entity.PhoneNumber;
 import com.example.addressbook.Fragments.HomeFragment;
 import com.example.addressbook.R;
 import com.example.addressbook.db.DataBaseHelper;
@@ -72,19 +76,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
     //holder.textView.setText(userInfo.get(position).getUserName().getFirstName());
-    holder.textView.setText(userInfo.get(position).getUserName().getFirstName());
-    holder.LastName.setText(userInfo.get(position).getUserName().getLastName());
-    //holder.Email.setText(userInfo.get(position).getEmailList().get(position).getEmail());
+         List<PhoneNumber> phoneNumberList = db.dao().getPhoneList(userInfo.get(position).getUserName().getId());
+   List<Address> addressList = db.dao().getAddress(userInfo.get(position).getUserName().getId());
+   List<Email> emailList = db.dao().getEmail(userInfo.get(position).getUserName().getId());
+    List<UserInfo> userInfoList = db.dao().getUserInfo();
+    holder.textView.setText((userInfo.get(position).getUserName().getFirstName()).toUpperCase());
+    holder.PhoneNumber.setText(phoneNumberList.get(0).getPhonNo());
+    holder.Email.setText(emailList.get(0).getEmail());
+    holder.Address.setText(addressList.get(0).getLine1()+
+            addressList.get(0).getCity()+addressList.get(0).getCountry());
     holder.linearLayout.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent =new Intent(context, UpdateAddressBookActivity.class);
+            Intent intent =new Intent(context, ViewAddressBook.class);
             //Bundle bundle = new Bundle();
            // bundle.putSerializable("UserName",  userInfo.get(holder.getPosition()).getUserName());
           // bundle.putSerializable("ListOfAddress",(Serializable)userInfo.get(position).getList());
            /* bundle.putSerializable("ListOfEmails",(Serializable)userInfo.get(position).getEmailList());
             bundle.putSerializable("ListOfPhoneNo",(Serializable) userInfo.get(position).getPhoneList());*/
             //intent.putExtra("BUNDLE",bundle);
+            intent.putExtra("UserInfoList",(Serializable)userInfoList);
             intent.putExtra("UserName",  userInfo.get(position).getUserName());
             intent.putExtra("ListOfAddress",(Serializable) userInfo.get(position).getList());
             intent.putExtra("ListOfEmails",(Serializable) userInfo.get(position).getEmailList());
@@ -200,14 +211,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     };
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView,LastName,Email;
+        TextView textView,PhoneNumber,Email,Address;
         LinearLayout linearLayout;
         ImageView imageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.linearLayout = itemView.findViewById(R.id.linearLayout1);
             this.textView = itemView.findViewById(R.id.MainFirstName);
-            this.LastName = itemView.findViewById(R.id.MainLastName);
+            this.PhoneNumber = itemView.findViewById(R.id.PhoneNumber);
+            this.Address = itemView.findViewById(R.id.Address);
             this.Email = itemView.findViewById(R.id.MainEmailName);
             this.imageView = itemView.findViewById(R.id.imageOfPerson);
     }

@@ -45,7 +45,7 @@ RecyclerViewAdapter recyclerViewAdapter;
         // Inflate the layout for this fragment
         DataBaseHelper db = DataBaseHelper.getDb(getActivity());
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        floatingActionButton = view.findViewById(R.id.FloatingActionButton1);
+      /*  floatingActionButton = view.findViewById(R.id.FloatingActionButton1);
         recyclerView = view.findViewById(R.id.rView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         listUserInfo = (ArrayList<UserInfo>)db.userInfoDao().getUserInfo();
@@ -58,7 +58,7 @@ RecyclerViewAdapter recyclerViewAdapter;
             }
         });
          recyclerViewAdapter = new RecyclerViewAdapter(getActivity(),listUserInfo);
-       /* SearchView searchView = new SearchView(getActivity());
+       *//* SearchView searchView = new SearchView(getActivity());
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -70,10 +70,10 @@ RecyclerViewAdapter recyclerViewAdapter;
                 recyclerViewAdapter.getFilter().filter(newText);
                 return false;
             }
-        });*/
-         /*intent.putExtra("RecyclerViewAdapter", (Serializable) recyclerViewAdapter);
-        startActivity(intent);*/
-         recyclerView.setAdapter(recyclerViewAdapter);
+        });*//*
+         *//*intent.putExtra("RecyclerViewAdapter", (Serializable) recyclerViewAdapter);
+        startActivity(intent);*//*
+         recyclerView.setAdapter(recyclerViewAdapter);*/
         return view;
     }
 

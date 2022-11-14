@@ -29,7 +29,7 @@ public class SignupPage extends Fragment {
     TextView firstName,lastName,userName, password, reEnterPassword, hero,ForgotPassword;
     Button create, reset;
     CheckFor checkFor =new CheckFor();
-
+    int createCount=0;
     public SignupPage() {
         // Required empty public constructor
     }
@@ -38,6 +38,7 @@ public class SignupPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+/*
         View view = inflater.inflate(R.layout.fragment_signup_page, container, false);
         userName = view.findViewById(R.id.UserName);
         password = view.findViewById(R.id.NewPassword);
@@ -45,11 +46,11 @@ public class SignupPage extends Fragment {
         create = view.findViewById(R.id.Create);
         hero = view.findViewById(R.id.HeroName);
         reset = view.findViewById(R.id.Reset);
-
         firstName = view.findViewById(R.id.FirstName);
         lastName = view.findViewById(R.id.LastName);
         DataBaseHelper databaseHelper = DataBaseHelper.getDb(getContext());
-
+if(createCount<=0){
+    createCount+=1;
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,20 +63,20 @@ public class SignupPage extends Fragment {
                 if (checkFor.validateEmail(UserName)) {
                     if (list.size() > 0) {
                         for (int i = 0; i < list.size(); i++) {
-
                             if (UserName.equals(list.get(i).getUserName())) {
                                 userName.setText("");
                                 break;
                             }
                         }
                     }
-
                     if (Password.equals(ReEnterPassword)) {
                         boolean check;
                         check = passwordValid(Password);
                         if (check) {
                             databaseHelper.dao().insert(new SignUp(UserName, Password, HeroName,
                                     firstName.getText().toString(), lastName.getText().toString()));
+                            Intent intent = new Intent(getActivity(), ActivtyLoginFragments.class);
+                            startActivity(intent);
                         } else {
                             Toast.makeText(getActivity(), "follow convention", Toast.LENGTH_SHORT).show();
                             password.setText("");
@@ -87,7 +88,7 @@ public class SignupPage extends Fragment {
                     Toast.makeText(getActivity(), "error in email/userName format", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        });}
 
 
 
@@ -98,12 +99,16 @@ public class SignupPage extends Fragment {
                 password.setText("");
                 reEnterPassword.setText("");
                 hero.setText("");
+                firstName.setText("");
+                lastName.setText("");
+                createCount=0;
             }
         });
+*/
 
-        return view;
+        return inflater.inflate(R.layout.fragment_signup_page, container, false);
     }
-    public boolean passwordValid(String str){
+   /* public boolean passwordValid(String str){
         int upper = 0, lower = 0, number = 0, special = 0;
       if(str.length() >= 8)
         {
@@ -129,5 +134,5 @@ public class SignupPage extends Fragment {
       else{
           return  false;
       }
-    }
+    }*/
 }

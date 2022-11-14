@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
                 Intent intent;
                 if (check) {
                     intent = new Intent(SplashActivity.this, HomePageActivity.class);
-                   // edit.putBoolean("login",true);
+                    edit.putBoolean("login",true);
                 }
                 else{
                     intent = new Intent(SplashActivity.this, ActivtyLoginFragments.class);

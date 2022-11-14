@@ -189,8 +189,8 @@ public String getImageUri(int id);
      * @return
      */
     @Transaction
-    @Query("select * from UserName where id=:id")
-    public UserInfo getUserInfoObj(int id);
+    @Query("select * from UserName")
+    public List<UserInfo> getUserInfo();
 
     /**
      *

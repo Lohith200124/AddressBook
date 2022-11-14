@@ -1,7 +1,9 @@
 package com.example.addressbook.db;
 
+import android.os.Build;
 import android.os.Parcelable;
 
+import androidx.annotation.RequiresApi;
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
@@ -12,7 +14,12 @@ import com.example.addressbook.Entity.PhoneNumber;
 import com.example.addressbook.Entity.UserName;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 /**
  * a class consist of all relations between user and address,email,phone and image
@@ -76,4 +83,51 @@ public class UserInfo implements Serializable {
     public void setImage(Image image) {
         this.image = image;
     }
+
+
+   /* @Override
+    public int compare(Object o, Object t1) {
+        return 0;
+    }
+
+    @Override
+    public Comparator reversed() {
+        return Comparator.super.reversed();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public Comparator thenComparing(Comparator other) {
+        return Comparator.super.thenComparing(other);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public Comparator thenComparingInt(ToIntFunction keyExtractor) {
+        return Comparator.super.thenComparingInt(keyExtractor);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public Comparator thenComparingLong(ToLongFunction keyExtractor) {
+        return Comparator.super.thenComparingLong(keyExtractor);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public Comparator thenComparingDouble(ToDoubleFunction keyExtractor) {
+        return Comparator.super.thenComparingDouble(keyExtractor);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public Comparator thenComparing(Function keyExtractor) {
+        return Comparator.super.thenComparing(keyExtractor);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public Comparator thenComparing(Function keyExtractor, Comparator keyComparator) {
+        return Comparator.super.thenComparing(keyExtractor, keyComparator);
+    }*/
 }

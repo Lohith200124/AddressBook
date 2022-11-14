@@ -3,6 +3,7 @@ package com.example.addressbook.Entity;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -26,7 +27,11 @@ public class SignUp {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-
+    @Ignore
+    public SignUp(@NonNull String userName1, String password) {
+        this.userName1 = userName1;
+        this.password = password;
+    }
     @NonNull
     public String getUserName() {
         return userName1;

@@ -7,7 +7,7 @@
     tools:context=".Fragments.LoginPage">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+   <!-- <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -102,5 +102,5 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
+-->
 </FrameLayout>

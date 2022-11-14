@@ -2,16 +2,11 @@ package com.example.addressbook.Activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteConstraintException;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,13 +27,9 @@ import com.example.addressbook.Fragments.HomeFragment;
 import com.example.addressbook.R;
 import com.example.addressbook.db.DataBaseHelper;
 import com.example.addressbook.db.UserInfo;
-import com.example.addressbook.db.UserNamePhoneNo;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *to insert the values it is used for creation
@@ -56,6 +47,7 @@ public class AddressBookStructureActivity extends AppCompatActivity {
     CheckFor checkFor = new CheckFor();
     DataBaseHelper db = DataBaseHelper.getDb(this);
     int saveButtonCount=0;
+    String item;
     RecyclerViewAdapter recyclerViewAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +93,9 @@ public class AddressBookStructureActivity extends AppCompatActivity {
         Nzipcode = findViewById(R.id.newzipcode);
         Nemail = findViewById(R.id.newemailAddress);
         NPhoneNo = findViewById(R.id.newphoneNo);
-        Ntype = findViewById(R.id.newtype);
-        NtypeEmail = findViewById(R.id.newtype1);
-        NtypePhoneNo = findViewById(R.id.newtype2);
+        Ntype = (Spinner) findViewById(R.id.newtype);
+        NtypeEmail = (Spinner)findViewById(R.id.newtype1);
+        NtypePhoneNo = (Spinner)findViewById(R.id.newtype2);
         ArrayAdapter<CharSequence> NadapterEmail=ArrayAdapter.createFromResource(this, R.array.type1, android.R.layout.simple_spinner_item);
         NadapterEmail.setDropDownViewResource(android.R.layout.simple_spinner_item);
         NtypeEmail.setAdapter(NadapterEmail);
@@ -487,10 +479,11 @@ saveButtonCount+=1;
                 }
             }
         }
-        Intent intent = new Intent(AddressBookStructureActivity.this,HomeFragment.class);
+        Intent intent = new Intent(AddressBookStructureActivity.this,HomePageActivity.class);
         startActivity(intent);
             try {
                 updateRecyclerView();
+                Toast.makeText(AddressBookStructureActivity.this, "inserted item", Toast.LENGTH_SHORT).show();
             }
             catch (NullPointerException e){
                 e.printStackTrace();
@@ -532,7 +525,8 @@ saveButtonCount+=1;
         countryStr = country.getText().toString();
         zipcodeStr = zipcode.getText().toString();
         list = db.dao().getAllUsers();
-        if (checkFor.validateEmail(emailStr)) {
+        if (checkFor.phoneNumberValidation(phonNoStr)) {
+            if (checkFor.validateEmail(emailStr)) {
             /*for(int i=0;i<list.size();i++){
                 if((firstName.getText().toString()).equals(list.get(i).getFirstName())){
                     id = db.dao().getId(firstName.getText().toString());
@@ -543,23 +537,28 @@ saveButtonCount+=1;
 
                     id = db.dao().insertUser(new UserName(firstName.getText().toString(), lastName.getText().toString()));
             }*/
-            id=idOfUser();
-            addressArrayList= (ArrayList<Address>) db.dao().getAddress((int)id);
-            if(AddressCheck(addressArrayList)) {
-                db.dao().insertAddress(new Address(id, type.getSelectedItem().toString(), line1Str, line2Str,
-                        cityStr, stateStr, countryStr, zipcodeStr));
+                id = idOfUser();
+                addressArrayList = (ArrayList<Address>) db.dao().getAddress((int) id);
+                if (AddressCheck(addressArrayList)) {
+                    db.dao().insertAddress(new Address(id, type.getSelectedItem().toString(), line1Str, line2Str,
+                            cityStr, stateStr, countryStr, zipcodeStr));
+                }
+                EmailList = (ArrayList<Email>) db.dao().getEmail((int) id);
+                if (EmailCheck(EmailList)) {
+                    db.dao().insertEmail(new Email(id, typeEmail.getSelectedItem().toString(), emailStr));
+                }
+                phoneList = (ArrayList<PhoneNumber>) db.dao().getPhoneList((int) id);
+                if (PhoneNoCheck(phoneList)) {
+
+                    db.dao().insertPhone(new PhoneNumber(id, typePhoneNo.getSelectedItem().toString(), phonNoStr));
+
+                }
+            } else {
+                email.setText("");
+                Toast.makeText(AddressBookStructureActivity.this, "follow the email convention", Toast.LENGTH_SHORT).show();
             }
-            EmailList = (ArrayList<Email>) db.dao().getEmail((int) id);
-            if(EmailCheck(EmailList)) {
-                db.dao().insertEmail(new Email(id, typeEmail.getSelectedItem().toString(), emailStr));
-            }
-            phoneList = (ArrayList<PhoneNumber>) db.dao().getPhoneList((int)id);
-            if(PhoneNoCheck(phoneList)) {
-                db.dao().insertPhone(new PhoneNumber(id, typePhoneNo.getSelectedItem().toString(), phonNoStr));
-            }
-        } else {
-            email.setText("");
-            Toast.makeText(AddressBookStructureActivity.this, "follow the email convention", Toast.LENGTH_SHORT).show();
+        }  else{
+            Toast.makeText(AddressBookStructureActivity.this, "phone", Toast.LENGTH_SHORT).show();
         }
     }
     ArrayList<UserName> list;
@@ -600,6 +599,18 @@ saveButtonCount+=1;
            Toast.makeText(this, "full", Toast.LENGTH_SHORT).show();
        }else if(list.size() <= 1) {
            for(int i=0;i<list.size();i++){
+              /* Ntype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                   @Override
+                   public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                       item = String.valueOf(Ntype.getItemAtPosition(Ntype.getSelectedItemPosition()));
+                       //return item;
+                   }
+
+                   @Override
+                   public void onNothingSelected(AdapterView<?> adapterView) {
+
+                   }
+               });*/
                if ((list.get(i).getType()).equals(Ntype.getSelectedItem().toString())){
                    Toast.makeText(this, "type already exist in address", Toast.LENGTH_SHORT).show();
                    return  false;
@@ -705,7 +716,11 @@ saveButtonCount+=1;
     public void insertNPhoneNo(long id) {
         ArrayList<PhoneNumber> phoneList = (ArrayList<PhoneNumber>) db.dao().getPhoneList((int)id);
         if (PhoneNoCheck(phoneList)) {
-            db.dao().insertPhone(new PhoneNumber(id, NtypePhoneNo.getSelectedItem().toString(), NPhoneNo.getText().toString()));
+            if (checkFor.phoneNumberValidation(NPhoneNo.getText().toString())) {
+                db.dao().insertPhone(new PhoneNumber(id, NtypePhoneNo.getSelectedItem().toString(), NPhoneNo.getText().toString()));
+            }else{
+                Toast.makeText(this, "wrong format", Toast.LENGTH_SHORT).show();
+            }
         }
         else{
             Toast.makeText(this, "full", Toast.LENGTH_SHORT).show();
@@ -768,12 +783,14 @@ saveButtonCount+=1;
      * to notify the recyclerview
      */
     public void updateRecyclerView(){
-        recyclerViewAdapter.userInfo.set(recyclerViewAdapter.userInfo.size()-1,new UserInfo(new UserName((int)idOfUser(),
+        recyclerViewAdapter.userInfo.add(recyclerViewAdapter.userInfo.size(),new UserInfo(new UserName((int)idOfUser(),
                 firstName.getText().toString(),lastName.getText().toString()),
                 new Image()
                 ,db.dao().getPhoneList((int)idOfUser()),db.dao().getEmail((int)idOfUser()),
-                db.dao().getAddress((int)idOfUser()) ));
-        recyclerViewAdapter.notifyItemChanged(recyclerViewAdapter.userInfo.size()-1);
+                db.dao().getAddress((int)idOfUser())));
+
+        recyclerViewAdapter.notifyItemInserted(recyclerViewAdapter.userInfo.size()-1);
+        //Toast.makeText(this, "inserted", Toast.LENGTH_SHORT).show();
     }
 
     }

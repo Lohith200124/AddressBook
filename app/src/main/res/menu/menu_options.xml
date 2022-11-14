@@ -8,9 +8,43 @@
         android:title="logOut"
         app:showAsAction="ifRoom"></item>
 
-  <!--  <item android:id="@+id/search"
+    <item android:id="@+id/search"
         android:icon="@drawable/ic_baseline_search_24"
         android:title="search"
         app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="android.widget.SearchView"></item>-->
+        app:actionViewClass="android.widget.SearchView"></item>
+    <item
+        android:id="@+id/sortByPhone"
+        android:title="sortByphoone"
+        app:showAsAction="collapseActionView"></item>
+    <item
+        android:id="@+id/sortByphoneReverse"
+        android:title="sortByPhoneDesndingOrder"
+        app:showAsAction="collapseActionView"></item>
+    <item
+        android:id="@+id/sortByName"
+        android:title="sortByName"
+        app:showAsAction="collapseActionView"></item>
+    <item
+        android:id="@+id/sortByNameDes"
+        android:title="sortByNameDescendingOrder"
+        app:showAsAction="collapseActionView"></item>
+   <!-- <item
+        android:id="@+id/sortByAddress"
+        android:title="SortByAddress"
+        app:showAsAction="collapseActionView">
+    </item>
+    <item
+        android:id="@+id/sortByAddressDes"
+        android:title="SortByAddressDescendingOrder"
+        app:showAsAction="collapseActionView">
+    </item>-->
+    <item
+        android:id="@+id/sortByEmail"
+        android:title="sortByEmail"
+        app:showAsAction="collapseActionView"></item>
+    <item
+        android:id="@+id/sortByEmailDes"
+        android:title="sortByEmailDescendingOrder"
+        app:showAsAction="collapseActionView"></item>
 </menu>

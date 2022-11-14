@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.UpdateAddressBookActivity"
+    tools:context=".Activity.ViewAddressBook"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -120,11 +120,11 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="5dp"></EditText>
-                <Button
+                <!--<Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/add"
-                    android:text="Add"></Button>
+                    android:text="Add"></Button>-->
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -214,11 +214,11 @@
                     android:spinnerMode="dropdown"
                     ></Spinner>
 
-                <Button
+             <!--   <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/addEmail"
-                    android:text="Add"></Button>
+                    android:text="Add"></Button>-->
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -265,11 +265,11 @@
                     android:spinnerMode="dropdown"
                     ></Spinner>
 
-                <Button
+               <!-- <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/addPhone"
-                    android:text="Add"></Button>
+                    android:text="Add"></Button>-->
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -313,14 +313,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center">
-                    <Button
+                   <!-- <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/buttonGallery"
                         android:text="gallery"
-                        ></Button>
+                        ></Button>-->
                 </LinearLayout>
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -336,9 +336,9 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/cancelButton"
                         android:text="cancel"></Button>
-                </LinearLayout>
+                </LinearLayout>-->
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
