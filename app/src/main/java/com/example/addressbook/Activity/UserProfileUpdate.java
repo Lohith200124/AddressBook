@@ -12,5 +12,6 @@ public class UserProfileUpdate extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile_update);
+        CoustomView coustomView = new CoustomView(this);
     }
 }

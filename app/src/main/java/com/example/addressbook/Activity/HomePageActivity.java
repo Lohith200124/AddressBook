@@ -139,7 +139,7 @@ public class HomePageActivity extends AppCompatActivity {
                 recyclerViewAdapter.getFilter().filter(newText);
                 return false;
             }
-        });*/
+        });*///menu.getItem(8).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
    /*   searchItem =    menu1.findItem(R.id.search_button);*/
         return super.onCreateOptionsMenu(menu);
     }

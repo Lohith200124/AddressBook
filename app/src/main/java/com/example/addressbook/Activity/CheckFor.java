@@ -49,7 +49,7 @@ public class CheckFor {
         }
     }
     public boolean phoneNumberValidation(String str){
-        Pattern ptrn = Pattern.compile("(0/91)?[7-9][0-9]{9}");
+        Pattern ptrn = Pattern.compile("(0|91)?[6-9][0-9]{9}");
 //the matcher() method creates a matcher that will match the given input against this pattern
         Matcher match = ptrn.matcher(str);
 //returns a boolean value

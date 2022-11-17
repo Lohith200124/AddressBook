@@ -481,6 +481,7 @@ saveButtonCount+=1;
         }
         Intent intent = new Intent(AddressBookStructureActivity.this,HomePageActivity.class);
         startActivity(intent);
+
             try {
                 updateRecyclerView();
                 Toast.makeText(AddressBookStructureActivity.this, "inserted item", Toast.LENGTH_SHORT).show();
@@ -557,7 +558,8 @@ saveButtonCount+=1;
                 email.setText("");
                 Toast.makeText(AddressBookStructureActivity.this, "follow the email convention", Toast.LENGTH_SHORT).show();
             }
-        }  else{
+        }
+        else{
             Toast.makeText(AddressBookStructureActivity.this, "phone", Toast.LENGTH_SHORT).show();
         }
     }

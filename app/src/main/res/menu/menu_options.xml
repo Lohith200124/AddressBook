@@ -47,4 +47,5 @@
         android:id="@+id/sortByEmailDes"
         android:title="sortByEmailDescendingOrder"
         app:showAsAction="collapseActionView"></item>
+
 </menu>
