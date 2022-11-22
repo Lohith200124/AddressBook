@@ -12,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,7 +41,7 @@ public class ViewAddressBook extends AppCompatActivity {
     boolean flag = false;
     private final static int CAMERA_REQ_CODE = 100;
     private final static int GALLERY_REQ_CODE = 150;
-    private CheckFor checkFor = new CheckFor();
+    private ValidationClass checkFor = new ValidationClass();
     private DataBaseHelper db = DataBaseHelper.getDb(this);
     private UserName username;
     ArrayList<Address> AddressArrayList;

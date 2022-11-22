@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +22,6 @@ import com.example.addressbook.Entity.Email;
 import com.example.addressbook.Entity.Image;
 import com.example.addressbook.Entity.PhoneNumber;
 import com.example.addressbook.Entity.UserName;
-import com.example.addressbook.Fragments.HomeFragment;
 import com.example.addressbook.R;
 import com.example.addressbook.db.DataBaseHelper;
 import com.example.addressbook.db.UserInfo;
@@ -44,7 +42,7 @@ public class AddressBookStructureActivity extends AppCompatActivity {
     private  LinearLayout linearLayoutForAddress,linearLayoutForEmail,linearLayoutForPhone;
     int countAddress=0,countEmail=0,countPhoneNo=0;
     private   final static int GALLERY_REQ_CODE = 150;
-    CheckFor checkFor = new CheckFor();
+    ValidationClass checkFor = new ValidationClass();
     DataBaseHelper db = DataBaseHelper.getDb(this);
     int saveButtonCount=0;
     String item;
@@ -329,7 +327,7 @@ public class AddressBookStructureActivity extends AppCompatActivity {
            long id;
             @Override
             public void onClick(View view) {
-saveButtonCount+=1;
+                saveButtonCount+=1;
                 emailStr = email.getText().toString();
                 phonNoStr = PhoneNo.getText().toString();
                 line1Str = line1.getText().toString();
@@ -360,7 +358,6 @@ saveButtonCount+=1;
 
                 Toast.makeText(AddressBookStructureActivity.this, "check the type one", Toast.LENGTH_SHORT).show();
             } else {
-                if (checkFor.validateEmail(Nemail.getText().toString())) {
                            /* try {
                                 id = db.dao().insertUser(new UserName(firstName.getText().toString(), lastName.getText().toString()));
                             } catch (Exception e) {
@@ -377,13 +374,8 @@ saveButtonCount+=1;
                     insertNAddress(id);
                     insertNEmail(id);
                     insertNPhoneNo(id);
-
                     //Toast.makeText(AddressBookStructureActivity.this, "entered", Toast.LENGTH_SHORT).show();
 
-                } else {
-                    email.setText("");
-                    Toast.makeText(AddressBookStructureActivity.this, "follow the email convention", Toast.LENGTH_SHORT).show();
-                }
             }
         } else if (countAddress >= 1 && countEmail == 0 && countPhoneNo == 0) {
             if ((type.getSelectedItem().toString()).equals(Ntype.getSelectedItem().toString())) {
@@ -482,13 +474,13 @@ saveButtonCount+=1;
         Intent intent = new Intent(AddressBookStructureActivity.this,HomePageActivity.class);
         startActivity(intent);
 
-            try {
+            /*try {
                 updateRecyclerView();
                 Toast.makeText(AddressBookStructureActivity.this, "inserted item", Toast.LENGTH_SHORT).show();
             }
             catch (NullPointerException e){
                 e.printStackTrace();
-            }
+            }*/
     }
 
     else{
@@ -511,7 +503,7 @@ saveButtonCount+=1;
      */
     public void insertBasic(){
         String emailStr,phonNoStr,line1Str,stateStr,countryStr,zipcodeStr,line2Str,cityStr;
-        CheckFor checkFor = new CheckFor();
+        ValidationClass checkFor = new ValidationClass();
         List<UserName> list;
         long id=0;
         ArrayList<Address> addressArrayList ;
@@ -525,7 +517,7 @@ saveButtonCount+=1;
         stateStr = state.getText().toString();
         countryStr = country.getText().toString();
         zipcodeStr = zipcode.getText().toString();
-        list = db.dao().getAllUsers();
+        //list = db.dao().getAllUsers();
         if (checkFor.phoneNumberValidation(phonNoStr)) {
             if (checkFor.validateEmail(emailStr)) {
             /*for(int i=0;i<list.size();i++){
@@ -599,7 +591,7 @@ saveButtonCount+=1;
         int counter=0;
        if(list.size()>=2){
            Toast.makeText(this, "full", Toast.LENGTH_SHORT).show();
-       }else if(list.size() <= 1) {
+       }else {
            for(int i=0;i<list.size();i++){
               /* Ntype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                    @Override
@@ -653,8 +645,8 @@ saveButtonCount+=1;
             Toast.makeText(this, "full", Toast.LENGTH_SHORT).show();
         }else if(list.size() >= 1) {
             for(int i=0;i<list.size();i++){
-                if ((list.get(i).getType()).equals(Ntype.getSelectedItem().toString())){
-                    Toast.makeText(this, "type already exist in address", Toast.LENGTH_SHORT).show();
+                if ((list.get(i).getType()).equals(NtypeEmail.getSelectedItem().toString())){
+                    Toast.makeText(this, "type already exist in email", Toast.LENGTH_SHORT).show();
                     return  false;
                 }
                 counter+=1;
@@ -697,8 +689,8 @@ saveButtonCount+=1;
             Toast.makeText(this, "full", Toast.LENGTH_SHORT).show();
         }else if(list.size() <= 1) {
             for(int i=0;i<list.size();i++){
-                if ((list.get(i).getType()).equals(Ntype.getSelectedItem().toString())){
-                    Toast.makeText(this, "type already exist in address", Toast.LENGTH_SHORT).show();
+                if ((list.get(i).getType()).equals(NtypePhoneNo.getSelectedItem().toString())){
+                    Toast.makeText(this, "type already exist in phoneNumber", Toast.LENGTH_SHORT).show();
                     return  false;
                 }
                 counter+=1;
@@ -755,7 +747,7 @@ saveButtonCount+=1;
        // linearLayoutForAddress.removeAllViews();
         countAddress=0;countEmail=0;
         countPhoneNo=0;
-
+        saveButtonCount=0;
     }
 
     /**
@@ -770,13 +762,21 @@ saveButtonCount+=1;
         super.onActivityResult(requestCode, resultCode, data);
         String str;
         Uri uri;
+        int count=0;
         if(resultCode == RESULT_OK){
-
             if(requestCode == GALLERY_REQ_CODE ){
                uri =  data.getData();
                str = uri.toString();
-               db.dao().insertImage(new Image(str,idOfUser()));
-                picture.setImageURI(data.getData());
+               try {
+                   db.dao().insertImage(new Image(str, idOfUser()));
+                   count+=1;
+               }
+               catch (Exception e){
+                   e.printStackTrace();
+               }
+               if(count>=1){
+                   picture.setImageURI(data.getData());
+               }
             }
         }
     }
@@ -784,7 +784,7 @@ saveButtonCount+=1;
     /**
      * to notify the recyclerview
      */
-    public void updateRecyclerView(){
+   /* public void updateRecyclerView(){
         recyclerViewAdapter.userInfo.add(recyclerViewAdapter.userInfo.size(),new UserInfo(new UserName((int)idOfUser(),
                 firstName.getText().toString(),lastName.getText().toString()),
                 new Image()
@@ -794,5 +794,5 @@ saveButtonCount+=1;
         recyclerViewAdapter.notifyItemInserted(recyclerViewAdapter.userInfo.size()-1);
         //Toast.makeText(this, "inserted", Toast.LENGTH_SHORT).show();
     }
-
+*/
     }

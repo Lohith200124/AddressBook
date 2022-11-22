@@ -22,7 +22,7 @@ import com.example.addressbook.Entity.UserName;
 /**
  * singleton class to access database
  */
-@Database(entities = {SignUp.class, UserName.class, Address.class, Email.class, PhoneNumber.class, Image.class},version = 12,exportSchema = false)
+@Database(entities = {SignUp.class, UserName.class, Address.class, Email.class, PhoneNumber.class, Image.class},version = 19,exportSchema = false)
 public abstract class DataBaseHelper extends RoomDatabase {
     private static String DB_NAME = "AddressBook";
     private static DataBaseHelper instance;

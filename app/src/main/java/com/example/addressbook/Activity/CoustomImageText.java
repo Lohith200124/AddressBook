@@ -19,13 +19,14 @@ import com.example.addressbook.R;
 
 public class CoustomImageText extends androidx.appcompat.widget.AppCompatImageView {
 
+
 Paint paint,borderPaint;
 RectF bounds;
 
     public CoustomImageText(@NonNull Context context) {
         super(context);
     }
-
+/*
     public CoustomImageText(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
@@ -37,6 +38,8 @@ RectF bounds;
     public void init(AttributeSet attr){
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        //borderPaint.setColor(borderColor);
         paint.setStyle(Paint.Style.FILL);
         if(attr == null)
             return;
@@ -49,7 +52,8 @@ RectF bounds;
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         bounds.set(0,0,getMeasuredWidth(),getMeasuredHeight());
     }
-   /* @Override
+   */
+/* @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // Try for a width based on our minimum
         int minw = getPaddingLeft() + getPaddingRight() + getSuggestedMinimumWidth();
@@ -61,11 +65,13 @@ RectF bounds;
         int h = resolveSizeAndState(minh, heightMeasureSpec, 0);
 
         setMeasuredDimension(w, h);
-    }*/
+    }*//*
+
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
         canvas.drawOval(bounds,paint);
     }
+*/
 
 }

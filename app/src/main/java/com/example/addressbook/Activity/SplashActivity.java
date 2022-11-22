@@ -22,17 +22,21 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
-                SharedPreferences.Editor edit = sharedPreferences.edit();
-                Boolean check = sharedPreferences.getBoolean("flag",false);
+                SharedPrefernceClass sp = new SharedPrefernceClass(getApplicationContext());
+                /*SharedPreferences sharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
+                SharedPreferences.Editor edit = sharedPreferences.edit();*/
+                Boolean check = sp.sharedPreferences.getBoolean("flag",false);
                 Intent intent;
-                if (check) {
-                    intent = new Intent(SplashActivity.this, HomePageActivity.class);
-                    edit.putBoolean("login",true);
+                intent = (check=true)? new Intent(SplashActivity.this, HomePageActivity.class):
+                         new Intent(SplashActivity.this, LoginPageActivity.class);
+
+              /*  if (check) {
+                    intent =
+                    //edit.putBoolean("flag",true);
                 }
                 else{
-                    intent = new Intent(SplashActivity.this, ActivtyLoginFragments.class);
-                }
+
+                }*/
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();

@@ -10,4 +10,9 @@
     android:layout_height="wrap_content"
     app:square_color="@color/squareColor"
     app:square_size="@dimen/squareSize"></com.example.addressbook.Activity.CoustomView>
+<com.example.addressbook.Activity.CoustomImageText
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"></com.example.addressbook.Activity.CoustomImageText>
+
+
 </LinearLayout>

@@ -47,5 +47,9 @@
         android:id="@+id/sortByEmailDes"
         android:title="sortByEmailDescendingOrder"
         app:showAsAction="collapseActionView"></item>
-
+<item
+    android:id="@+id/AccountInfo"
+    android:title="userAccountinfo"
+    android:icon="@drawable/ic_baseline_manage_accounts_24"
+    app:showAsAction="always"></item>
 </menu>

@@ -4,15 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,7 +32,6 @@ import com.example.addressbook.db.DataBaseHelper;
 import com.example.addressbook.db.UserInfo;
 
 import java.util.ArrayList;
-import java.util.List;
 //import com.example.addressbook.db.UserName;
 
 public class UpdateAddressBookActivity extends AppCompatActivity {
@@ -53,7 +47,7 @@ public class UpdateAddressBookActivity extends AppCompatActivity {
     boolean flag = false;
     private final static int CAMERA_REQ_CODE = 100;
     private final static int GALLERY_REQ_CODE = 150;
-    private CheckFor checkFor = new CheckFor();
+    private ValidationClass checkFor = new ValidationClass();
     private  DataBaseHelper db = DataBaseHelper.getDb(this);
     private UserName username;
     ArrayList<Address> AddressArrayList;
@@ -1003,7 +997,7 @@ if(phoneNumberArrayList.size()>=2){
             Toast.makeText(this, "full", Toast.LENGTH_SHORT).show();
         }else if(list.size() <= 1) {
             for(int i=0;i<list.size();i++){
-                if ((list.get(i).getType()).equals(Ntype.getSelectedItem().toString())){
+                if ((list.get(i).getType()).equals(NtypePhoneNo.getSelectedItem().toString())){
                     Toast.makeText(this, "type already exist in address", Toast.LENGTH_SHORT).show();
                     return  false;
                 }

@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 /**
  * checking of email
  */
-public class CheckFor {
+public class ValidationClass {
     /**
      * checks the email format and returns true or false
      * @param str
@@ -55,5 +55,10 @@ public class CheckFor {
 //returns a boolean value
         return (match.find() && match.group().equals(str));
 
+    }
+    public boolean zipcodeValidation(String str){
+        Pattern ptr = Pattern.compile("[1-9]{6}");
+        Matcher match = ptr.matcher(str);
+        return  (match.find()&&match.group().equals(str));
     }
 }

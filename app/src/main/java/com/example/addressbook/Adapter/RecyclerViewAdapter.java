@@ -1,7 +1,6 @@
 package com.example.addressbook.Adapter;
 
-import static androidx.core.content.ContextCompat.checkSelfPermission;
-import static androidx.core.content.ContextCompat.getDrawable;
+import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
 
 import android.Manifest;
 import android.app.Activity;
@@ -11,8 +10,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,28 +19,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.addressbook.Activity.HomePageActivity;
-import com.example.addressbook.Activity.UpdateAddressBookActivity;
 import com.example.addressbook.Activity.ViewAddressBook;
 import com.example.addressbook.Entity.Address;
 import com.example.addressbook.Entity.Email;
-import com.example.addressbook.Entity.Image;
 import com.example.addressbook.Entity.PhoneNumber;
-import com.example.addressbook.Fragments.HomeFragment;
 import com.example.addressbook.R;
 import com.example.addressbook.db.DataBaseHelper;
 import com.example.addressbook.db.UserInfo;
 
 import java.io.Serializable;
+import java.security.Permission;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * recyclerview adapter
@@ -54,6 +50,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
    private List<UserInfo> searchUserinfo = new ArrayList<>();
     DataBaseHelper db = DataBaseHelper.getDb(context);
     public static final int PERMISSION_REQUEST_CODE =120;
+    public ActivityResultLauncher<String> activityResultLauncher;
   public  RecyclerViewAdapter(Context context, List<UserInfo> userInfo){
         this.context = context;
         this.userInfo = userInfo;
@@ -63,7 +60,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recyclerviewstructurer,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.recyclerview_adapter_structurer,parent,false);
         ViewHolder  viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -117,20 +114,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             alertDailog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    db.dao().delUserName1ById(userInfo.get(position-1).getUserName().getId());
+                    db.dao().delUserName1ById(userInfo.get(position).getUserName().getId());
                     try {
                         db.dao().delImageById((int) userInfo.get(position).getImage().getId());
                     }catch (NullPointerException e){
                         e.printStackTrace();
                     }
                     for(int j=0;j<=userInfo.get(position).getEmailList().size()-1;j++) {
-                        db.dao().delEmailbyId(userInfo.get(position).getEmailList().get(j).getEmailId());
+                        db.dao().delEmailbyId(userInfo.get(position).getUserName().getId());
                     }
                     for(int j=0;j<=userInfo.get(position).getPhoneList().size()-1;j++) {
-                        db.dao().delPhoneById(userInfo.get(position).getPhoneList().get(j).getPhoneNoId());
+                        db.dao().delPhoneById(userInfo.get(position).getUserName().getId());
                     }
                     for(int j=0;j<=userInfo.get(position).getList().size()-1;j++) {
-                        db.dao().delAddressById(userInfo.get(position).getList().get(j).getAddress_id());
+                        db.dao().delAddressById(userInfo.get(position).getUserName().getId());
                     }
                     userInfo.remove(position);
                     notifyItemRemoved(position);
@@ -147,30 +144,55 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             return false;
         }
-    });
+    });Uri uri = Uri.parse(userInfo.get(position).getImage().getUri());
            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+              /* activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
+                       *//*new ActivityResultCallback<>(){
+                           @Override
+                           public void onActivityResult(Object result) {
+                               if(result.equals(true)){
+                                   holder.imageView.setImageURI(uri);
+                               }else{
+
+                               }
+                           }*//*
+                   isGranted ->{
+                   if(isGranted){
+                       holder.imageView.setImageURI(uri);
+                   }else{
+
+                   }
+               });*/
+              /* (new ActivityResultContracts.RequestPermission(),isGranted -> {
+                   if( String.valueOf(isGranted)){
+                       holder.imageView.setImageURI(uri);
+                   }else{
+                       holder.imageView.setImageURI(uri);
+                   }
+               });*/
                 int result = ContextCompat.checkSelfPermission(context, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+
                 if (result==PackageManager.PERMISSION_GRANTED) {
                     try {
-                        holder.imageView.setImageURI(Uri.parse(userInfo.get(position).getImage().getUri()));
+
+                       holder.imageView.setImageURI(uri);
                     }
-                    catch(NullPointerException nullPointerException){
-                        nullPointerException.printStackTrace();
+                    catch(Exception e){
+                        e.printStackTrace();
                     }
                 } else {
-                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-
+                            activityResultLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+                   // ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},  1);
                 }
             }
             else { //permission is automatically granted on sdk<23 upon installation
 
-                    holder.imageView.setImageURI(Uri.parse(userInfo.get(position).getImage().getUri()));
+                  holder.imageView.setImageURI(uri);
 
             }
 
-
-
     }
+
 
     @Override
     public int getItemCount() {

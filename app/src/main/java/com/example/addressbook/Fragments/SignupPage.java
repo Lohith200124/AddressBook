@@ -1,6 +1,5 @@
 package com.example.addressbook.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,16 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.addressbook.Activity.ActivtyLoginFragments;
-import com.example.addressbook.Activity.CheckFor;
-import com.example.addressbook.Activity.ForgotPassword;
-import com.example.addressbook.Entity.SignUp;
+import com.example.addressbook.Activity.ValidationClass;
 import com.example.addressbook.R;
-import com.example.addressbook.db.DataBaseHelper;
-
-import java.util.List;
 
 /**
  * signup page fragment
@@ -28,7 +20,7 @@ public class SignupPage extends Fragment {
 
     TextView firstName,lastName,userName, password, reEnterPassword, hero,ForgotPassword;
     Button create, reset;
-    CheckFor checkFor =new CheckFor();
+    ValidationClass checkFor =new ValidationClass();
     int createCount=0;
     public SignupPage() {
         // Required empty public constructor
@@ -75,7 +67,7 @@ if(createCount<=0){
                         if (check) {
                             databaseHelper.dao().insert(new SignUp(UserName, Password, HeroName,
                                     firstName.getText().toString(), lastName.getText().toString()));
-                            Intent intent = new Intent(getActivity(), ActivtyLoginFragments.class);
+                            Intent intent = new Intent(getActivity(), LoginPageActivity.class);
                             startActivity(intent);
                         } else {
                             Toast.makeText(getActivity(), "follow convention", Toast.LENGTH_SHORT).show();
