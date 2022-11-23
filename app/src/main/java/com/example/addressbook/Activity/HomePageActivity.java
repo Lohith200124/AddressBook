@@ -70,25 +70,25 @@ ActivityResultLauncher<String> requestPermissionLauncher;
         floatingActionButton = findViewById(R.id.FloatingActionButton1);
         recyclerView = findViewById(R.id.rView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
             int result = ContextCompat.checkSelfPermission(HomePageActivity.this, android.Manifest.permission.APP);
 
             if (result== PackageManager.PERMISSION_GRANTED) {
-                /*try {
+                *//*try {
 
                     holder.imageView.setImageURI(uri);
                 }
                 catch(Exception e){
                     e.printStackTrace();
-                }*/ Log.i("Already Granted","permission");
+                }*//* Log.i("Already Granted","permission");
             } else {
                 requestPermissionLauncher.launch(Manifest.permission.MANAGE_DOCUMENTS);
                 // ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},  1);
             }
-        }
+        }*/
         listUserInfo = (ArrayList<UserInfo>)db.userInfoDao().getUserInfo();
-            requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+            /*requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
                     Log.i("Granted","permission");
 
@@ -100,7 +100,7 @@ ActivityResultLauncher<String> requestPermissionLauncher;
                     // settings in an effort to convince the user to change their
                     // decision.
                 }
-            });
+            });*/
         Log.i("not entered","permission");
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {

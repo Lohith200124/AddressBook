@@ -322,11 +322,11 @@ public class EmailAndPhoneNumberFragment extends Fragment {
                     if (PhoneNoCheck(phoneList)) {
                     db.dao().insertPhone(new PhoneNumber(id, type_PhoneNumber.getSelectedItem().toString(), phonNoStr));
                      }
-                    try {
+                   /* try {
                         db.dao().insertImage(new Image(uri_image.toString(), idOfUser()));
                     }catch (Exception e){
                         e.printStackTrace();
-                    }
+                    }*/
                 } else {
                     email.setText("");
                     email_textInputLayout.setError("");

@@ -144,7 +144,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             return false;
         }
-    });Uri uri = Uri.parse(userInfo.get(position).getImage().getUri());
+    });
+    /*Uri uri = Uri.parse(userInfo.get(position).getImage().getUri());*/
            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
               /* activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
                        *//*new ActivityResultCallback<>(){
@@ -175,19 +176,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 if (result==PackageManager.PERMISSION_GRANTED) {
                     try {
 
-                       holder.imageView.setImageURI(uri);
+                      // holder.imageView.setImageURI(uri);
                     }
                     catch(Exception e){
                         e.printStackTrace();
                     }
                 } else {
-                            activityResultLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+                            //activityResultLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
                    // ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},  1);
                 }
             }
             else { //permission is automatically granted on sdk<23 upon installation
 
-                  holder.imageView.setImageURI(uri);
+                 // holder.imageView.setImageURI(uri);
 
             }
 
